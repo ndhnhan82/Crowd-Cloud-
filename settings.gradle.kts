@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PrjCrowdCloud_Team6_Nov2"
+rootProject.name = "CrowdCloud"
 include(":app")
  
