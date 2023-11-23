@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">CrowdCloud</string>
+    <string name="app_name">Welcome to Crowd Cloud</string>
+    <string name="app_title">Crowd Cloud</string>
+    <string name="quit">Quit</string>
+
+    //Navigation menu
+
+    <string name="nav_drawer_open" translatable="false">Open navigation</string>
+    <string name="nav_drawer_close">Close navigation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
