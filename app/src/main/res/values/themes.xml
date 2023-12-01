@@ -14,5 +14,32 @@
         <!-- Customize your theme here. -->
 
     </style>
+    <style name="Theme.CrowdCloud.Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">#FFC107</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+
+    </style>
+
+
+    <style name="tcClock">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/holo_green_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:format12Hour">hh:mm:ss A</item>
+    </style>
+    <style name="Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/holo_orange_dark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>
