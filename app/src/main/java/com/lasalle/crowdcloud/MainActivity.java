@@ -3,6 +3,7 @@ package com.lasalle.crowdcloud;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,7 +14,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int FRAGMENT_PREFERENCE = 1;
     private int mCurrentFragment = FRAGMENT_HOME;
 
+    boolean isDark = true;
+    Switch swDark;
 
     private NavigationView navigationView;
 
@@ -49,8 +54,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener( toggle );
         toggle.syncState();
         navigationView = (NavigationView) findViewById( R.id.navigation_view );
+
         navigationView.setNavigationItemSelectedListener( this );
         navigationView.getMenu().findItem( R.id.nav_preferences ).setChecked( true );
+        swDark = navigationView.getMenu().findItem(R.id.nav_switch).getActionView().findViewById(R.id.nav_switch);
+        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            swDark.setChecked(true);
+        }
+        swDark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+
         View navHeaderView = navigationView.getHeaderView( 0 );
         replaceFragment( new Home() );
     }
@@ -58,21 +81,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.nav_home) {
             if (mCurrentFragment != FRAGMENT_HOME) {
                 replaceFragment( new Home() );
                 mCurrentFragment = FRAGMENT_HOME;
+
             }
+            drawerLayout.closeDrawers();
         } else if (id == R.id.nav_preferences) {
             if (mCurrentFragment != FRAGMENT_PREFERENCE) {
                 replaceFragment( new Preference() );
                 mCurrentFragment = FRAGMENT_PREFERENCE;
+
             }
-        }else if (id == R.id.nav_quit){
+            drawerLayout.closeDrawers();
+        }else if (id == R.id.nav_quit) {
             this.finish();
             getApplication().notifyAll();
+            drawerLayout.closeDrawers();
         }
-        drawerLayout.closeDrawers();
+
         return true;
     }
     @Override
