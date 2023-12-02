@@ -22,35 +22,37 @@
         <!-- AutoCompleteTextView for Location Input -->
         <AutoCompleteTextView
             android:id="@+id/edLocation"
-            android:layout_width="0dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:hint="Enter location"
+            android:hint="City"
             android:padding="12dp"
-            android:background="@android:color/background_light"
+            android:background="@drawable/rounded_buttons"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_default="percent"
             android:backgroundTint="#00FC8C04"
+            android:layout_marginLeft="10dp"
             />
 
         <!-- Button to Finish and Apply Preferences -->
-        <Button
-            android:id="@+id/btnFinish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Finish"
-            app:layout_constraintTop_toBottomOf="@id/edLocation"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:drawableStart="@android:drawable/ic_menu_search"/>
 
 
         <!-- Other UI components as needed -->
 
         <!-- ScrollView placed under the Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="Search"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_buttons"
+            app:layout_constraintBaseline_toBaselineOf="@id/edLocation"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <ScrollView
             android:id="@+id/svResults"
             android:layout_width="0dp"
@@ -71,6 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="City: "
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="16dp"
@@ -92,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Temperature: "
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/tvCityLabel"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
@@ -113,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Humidity: "
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/tvTemperatureResult"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
@@ -134,6 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Description: "
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/tvHumidityResult"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
@@ -155,6 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Wind Speed: "
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/tvDescriptionResult"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
@@ -176,6 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cloudiness: "
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/tvWindSpeedResult"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
@@ -197,6 +205,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pressure: "
+                    android:textColor="@color/black"
                     app:layout_constraintTop_toBottomOf="@id/tvCloudinessResult"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="10dp"
