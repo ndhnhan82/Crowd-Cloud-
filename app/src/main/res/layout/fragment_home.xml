@@ -5,225 +5,448 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:elevation="4dp"
-    android:background="@android:color/holo_orange_dark"
+    android:background="#408EE1"
     tools:context="fragments.Home">
 
     <!-- Background View for Added Depth -->
+
     <View
         android:id="@+id/vMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rounded_corners"/>
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="80dp"
+        android:background="@drawable/rounded_corners"
+        >
 
         <!-- AutoCompleteTextView for Location Input -->
         <AutoCompleteTextView
             android:id="@+id/edLocation"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_buttons"
+            android:backgroundTint="#00FC8C04"
             android:hint="City"
             android:padding="12dp"
-            android:background="@drawable/rounded_buttons"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_default="percent"
-            android:backgroundTint="#00FC8C04"
-            android:layout_marginLeft="10dp"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent" />
 
-        <!-- Button to Finish and Apply Preferences -->
-
-
-        <!-- Other UI components as needed -->
-
-        <!-- ScrollView placed under the Button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFinish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:text="Search"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
             android:background="@drawable/rounded_buttons"
+            android:text=""
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:drawableStart="@drawable/ic_action_name"
+            android:paddingStart="35dp"
+            android:paddingEnd="0dp"
             app:layout_constraintBaseline_toBaselineOf="@id/edLocation"
             app:layout_constraintEnd_toEndOf="parent" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        >
+
         <ScrollView
             android:id="@+id/svResults"
-            android:layout_width="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/btnFinish"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            tools:layout_editor_absoluteY="66dp"
+            android:scrollbars="none"
+            >
 
             <!-- Content inside the ScrollView -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                >
 
-                <!-- City Label -->
-                <TextView
-                    android:id="@+id/tvCityLabel"
-                    android:layout_width="wrap_content"
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/CardView1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="City: "
-                    android:textColor="@color/black"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardBackgroundColor="#DCDCDC"
+                    >
 
-                <!-- City Result -->
-                <TextView
-                    android:id="@+id/tvCityResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvCityLabel"
-                    app:layout_constraintStart_toEndOf="@id/tvCityLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/CL1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="15dp"
+                        >
 
-                <!-- Temperature Label -->
-                <TextView
-                    android:id="@+id/tvTemperatureLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Temperature: "
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/tvCityLabel"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"/>
+                        <TextView
+                            android:id="@+id/tvDescriptionResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description Results"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ivWeather"
+                            android:layout_marginTop="10dp"
+                             />
 
-                <!-- Temperature Result -->
-                <TextView
-                    android:id="@+id/tvTemperatureResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvTemperatureLabel"
-                    app:layout_constraintStart_toEndOf="@id/tvTemperatureLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp"/>
+                        <ImageView
+                            android:id="@+id/ivWeather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:src="@tools:sample/avatars"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvTemperatureResult"
+                            android:layout_marginTop="20dp"
 
-                <!-- Humidity Label -->
-                <TextView
-                    android:id="@+id/tvHumidityLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Humidity: "
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/tvTemperatureResult"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"/>
+                            />
 
-                <!-- Humidity Result -->
-                <TextView
-                    android:id="@+id/tvHumidityResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvHumidityLabel"
-                    app:layout_constraintStart_toEndOf="@id/tvHumidityLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp"/>
+                        <TextView
+                            android:id="@+id/tvCityResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="City Results"
+                            android:textColor="@color/black"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_marginTop="10dp"
+                            />
 
-                <!-- Description Label -->
-                <TextView
-                    android:id="@+id/tvDescriptionLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Description: "
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/tvHumidityResult"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"/>
+                        <TextView
+                            android:id="@+id/tvTemperatureResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temp Results"
+                            android:textColor="@color/black"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            tools:layout_editor_absoluteY="30dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvCityResult"
+                            android:layout_marginTop="10dp"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Description Result -->
-                <TextView
-                    android:id="@+id/tvDescriptionResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvDescriptionLabel"
-                    app:layout_constraintStart_toEndOf="@id/tvDescriptionLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp"/>
+                </androidx.cardview.widget.CardView>
 
-                <!-- Wind Speed Label -->
-                <TextView
-                    android:id="@+id/tvWindSpeedLabel"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/CardView2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Wind Speed: "
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/tvDescriptionResult"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"/>
+                    app:layout_constraintTop_toBottomOf="@id/CardView1"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardBackgroundColor="#DCDCDC"
+                    >
 
-                <!-- Wind Speed Result -->
-                <TextView
-                    android:id="@+id/tvWindSpeedResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvWindSpeedLabel"
-                    app:layout_constraintStart_toEndOf="@id/tvWindSpeedLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/CL2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:padding="15dp"
+                        >
 
-                <!-- Cloudiness Label -->
-                <TextView
-                    android:id="@+id/tvCloudinessLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cloudiness: "
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/tvWindSpeedResult"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"/>
+                        <TextView
+                            android:id="@+id/tvWindSpeedLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wind Speed: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="10dp"
 
-                <!-- Cloudiness Result -->
-                <TextView
-                    android:id="@+id/tvCloudinessResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvCloudinessLabel"
-                    app:layout_constraintStart_toEndOf="@id/tvCloudinessLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp"/>
+                             />
 
-                <!-- Pressure Label -->
-                <TextView
-                    android:id="@+id/tvPressureLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pressure: "
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@id/tvCloudinessResult"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"/>
+                        <TextView
+                            android:id="@+id/tvWindSpeedResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wind Speed Results"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@id/tvWindSpeedLabel"
+                            app:layout_constraintTop_toTopOf="parent"
+                             />
 
-                <!-- Pressure Result -->
-                <TextView
-                    android:id="@+id/tvPressureResult"
-                    android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tvCloudinessLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cloudiness: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/tvWindSpeedLabel"
+                            app:layout_constraintStart_toStartOf="@id/tvWindSpeedLabel"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvCloudinessResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cloudiness Results"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@id/tvWindSpeedResult"
+                            app:layout_constraintTop_toBottomOf="@id/tvWindSpeedResult"
+                            android:layout_marginTop="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvPressureLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pressure: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@id/tvWindSpeedResult"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvPressureResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pressure Results"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@id/tvPressureLabel"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvHumidityResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Humidity Results"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/tvPressureResult"
+                            app:layout_constraintStart_toStartOf="@id/tvPressureResult"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvHumidityLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Humidity: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@id/tvPressureLabel"
+                            app:layout_constraintTop_toBottomOf="@id/tvPressureLabel"
+                            android:layout_marginTop="10dp"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/CardView3"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tvPressureLabel"
-                    app:layout_constraintStart_toEndOf="@id/tvPressureLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp"/>
+                    app:layout_constraintTop_toBottomOf="@id/CardView2"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="#DCDCDC"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/CL3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="15dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/tvDay1_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monday"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:layout_marginLeft="10dp"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/ivIcon1_1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintTop_toBottomOf="@id/tvDay1_1"
+                            app:layout_constraintStart_toStartOf="@id/tvDay1_1"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvTempDay1_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25°C"
+                            app:layout_constraintTop_toBottomOf="@id/ivIcon1_1"
+                            app:layout_constraintStart_toStartOf="@id/ivIcon1_1"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvDay2_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tuesday"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@id/tvDay1_1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                        <ImageView
+                            android:id="@+id/ivIcon2_1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintTop_toBottomOf="@id/tvDay2_1"
+                            app:layout_constraintStart_toStartOf="@id/tvDay2_1"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvTempDay2_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="28°C"
+                            app:layout_constraintTop_toBottomOf="@id/ivIcon2_1"
+                            app:layout_constraintStart_toStartOf="@id/ivIcon2_1"
+                            android:layout_marginTop="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvDay3_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wednesday"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@id/tvDay2_1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="10dp"
+                             />
+
+                        <ImageView
+                            android:id="@+id/ivIcon3_1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintTop_toBottomOf="@id/tvDay3_1"
+                            app:layout_constraintStart_toStartOf="@id/tvDay3_1"
+                            android:layout_marginTop="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvTempDay3_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="26°C"
+                            app:layout_constraintTop_toBottomOf="@id/ivIcon3_1"
+                            app:layout_constraintStart_toStartOf="@id/ivIcon3_1"
+                            android:layout_marginTop="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvDay4_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thursday"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@id/tvDay3_1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="10dp"
+                             />
+
+                        <ImageView
+                            android:id="@+id/ivIcon4_1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintTop_toBottomOf="@id/tvDay4_1"
+                            app:layout_constraintStart_toStartOf="@id/tvDay4_1"
+                            android:layout_marginTop="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvTempDay4_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25°C"
+                            app:layout_constraintTop_toBottomOf="@id/ivIcon4_1"
+                            app:layout_constraintStart_toStartOf="@id/ivIcon4_1"
+                            android:layout_marginTop="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvDay5_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Friday"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toRightOf="@id/tvDay4_1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="10dp"
+                             />
+
+                        <ImageView
+                            android:id="@+id/ivIcon5_1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintTop_toBottomOf="@id/tvDay5_1"
+                            app:layout_constraintStart_toStartOf="@id/tvDay5_1"
+                            android:layout_marginTop="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tvTempDay5_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="27°C"
+                            app:layout_constraintTop_toBottomOf="@id/ivIcon5_1"
+                            app:layout_constraintStart_toStartOf="@id/ivIcon5_1"
+                            android:layout_marginTop="10dp"
+                             />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

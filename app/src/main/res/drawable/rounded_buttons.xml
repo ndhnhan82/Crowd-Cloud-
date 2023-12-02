@@ -3,5 +3,5 @@
     android:shape="rectangle">
     <button style="@style/Widget.AppCompat.Button.Borderless"></button>
     <corners android:radius="50dp" />
-    <solid android:color="#1AA7EC" /> <!-- Set your desired background color here -->
+    <solid android:color="#00FFFFFF" /> <!-- Set your desired background color here -->
 </shape>
