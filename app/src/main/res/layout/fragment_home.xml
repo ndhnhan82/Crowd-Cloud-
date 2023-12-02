@@ -2,13 +2,219 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:elevation="4dp"
+    android:background="@android:color/holo_orange_dark"
     tools:context="fragments.Home">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Background View for Added Depth -->
+    <View
+        android:id="@+id/vMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Home page"
-       />
+        android:background="@drawable/rounded_corners"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- AutoCompleteTextView for Location Input -->
+        <AutoCompleteTextView
+            android:id="@+id/edLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter location"
+            android:padding="12dp"
+            android:background="@android:color/background_light"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_default="percent"
+            android:backgroundTint="#00FC8C04"
+            />
+
+        <!-- Button to Finish and Apply Preferences -->
+        <Button
+            android:id="@+id/btnFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finish"
+            app:layout_constraintTop_toBottomOf="@id/edLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@android:drawable/ic_menu_search"/>
+
+
+        <!-- Other UI components as needed -->
+
+        <!-- ScrollView placed under the Button -->
+        <ScrollView
+            android:id="@+id/svResults"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/btnFinish"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- Content inside the ScrollView -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- City Label -->
+                <TextView
+                    android:id="@+id/tvCityLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City: "
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- City Result -->
+                <TextView
+                    android:id="@+id/tvCityResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tvCityLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvCityLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Temperature Label -->
+                <TextView
+                    android:id="@+id/tvTemperatureLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature: "
+                    app:layout_constraintTop_toBottomOf="@id/tvCityLabel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Temperature Result -->
+                <TextView
+                    android:id="@+id/tvTemperatureResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tvTemperatureLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvTemperatureLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Humidity Label -->
+                <TextView
+                    android:id="@+id/tvHumidityLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Humidity: "
+                    app:layout_constraintTop_toBottomOf="@id/tvTemperatureResult"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Humidity Result -->
+                <TextView
+                    android:id="@+id/tvHumidityResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tvHumidityLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvHumidityLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Description Label -->
+                <TextView
+                    android:id="@+id/tvDescriptionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description: "
+                    app:layout_constraintTop_toBottomOf="@id/tvHumidityResult"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Description Result -->
+                <TextView
+                    android:id="@+id/tvDescriptionResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tvDescriptionLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvDescriptionLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Wind Speed Label -->
+                <TextView
+                    android:id="@+id/tvWindSpeedLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wind Speed: "
+                    app:layout_constraintTop_toBottomOf="@id/tvDescriptionResult"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Wind Speed Result -->
+                <TextView
+                    android:id="@+id/tvWindSpeedResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tvWindSpeedLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvWindSpeedLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Cloudiness Label -->
+                <TextView
+                    android:id="@+id/tvCloudinessLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cloudiness: "
+                    app:layout_constraintTop_toBottomOf="@id/tvWindSpeedResult"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Cloudiness Result -->
+                <TextView
+                    android:id="@+id/tvCloudinessResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tvCloudinessLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvCloudinessLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Pressure Label -->
+                <TextView
+                    android:id="@+id/tvPressureLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pressure: "
+                    app:layout_constraintTop_toBottomOf="@id/tvCloudinessResult"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"/>
+
+                <!-- Pressure Result -->
+                <TextView
+                    android:id="@+id/tvPressureResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@id/tvPressureLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvPressureLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
