@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/rounded_corners"
+        android:background="#F6CDC0"
         >
 
         <!-- AutoCompleteTextView for Location Input -->
@@ -30,6 +30,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded_buttons"
+            android:singleLine="true"
             android:backgroundTint="#00FC8C04"
             android:hint="City"
             android:padding="12dp"
