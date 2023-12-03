@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1037419450953",
+    "firebase_url": "https://crowdcloud-be212-default-rtdb.firebaseio.com",
+    "project_id": "crowdcloud-be212",
+    "storage_bucket": "crowdcloud-be212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037419450953:android:d15af61a77fb697cc86598",
+        "android_client_info": {
+          "package_name": "com.lasalle.crowdcloud"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4jNi5YmO5XxoKFot-qg3_GP5X_f0M6z0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

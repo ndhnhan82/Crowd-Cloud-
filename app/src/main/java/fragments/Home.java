@@ -319,7 +319,7 @@ public class Home extends Fragment {
 
         // Update the views
         dayLabel.setText(dayOfWeek);
-        temperatureLabel.setText(String.valueOf(temperature) + " °C");
+        temperatureLabel.setText(String.valueOf((int)Math.round(temperature)) + " °C");
 
         // Load weather icon using Picasso (assuming you have Picasso library added)
         String imageUrl = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
@@ -370,6 +370,7 @@ public class Home extends Fragment {
 
             // Extracting relevant information
             String cityName = jsonObject.getString("name");
+            String countryName = jsonObject.getJSONObject("sys").getString("country");
             double temperature = jsonObject.getJSONObject("main").getDouble("temp");
             int humidity = jsonObject.getJSONObject("main").getInt("humidity");
             JSONArray weatherArray = jsonObject.getJSONArray("weather");
@@ -382,7 +383,7 @@ public class Home extends Fragment {
 
 
             // Updating UI with the extracted information
-            tvCityResult.setText(cityName);
+            tvCityResult.setText(cityName + ", " + countryName);
             tvTemperatureResult.setText(String.valueOf((int)tempCelsius + " °C"));
             tvHumidityResult.setText(String.valueOf(humidity) + " %");
             tvWindSpeedResult.setText(String.valueOf(windSpeed) + " kmph");
