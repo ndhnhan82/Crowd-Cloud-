@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_preferences"
@@ -15,22 +15,30 @@
         <item
             android:id="@+id/nav_switch"
             android:icon="@drawable/ic_moon"
-            android:title="Light/Dark"
+            android:title="@string/light_dark"
             app:actionViewClass="android.widget.Switch"
             app:showAsAction="always"
 
             />
     </group>
 
-    <item android:title="Another option" >
+    <item android:title="@string/another_option">
         <menu>
-
             <item
                 android:id="@+id/nav_quit"
                 android:icon="@drawable/ic_exit"
                 android:title="@string/quit" />
-
         </menu>
-
     </item>
-    </menu>
+    <item android:title="@string/empty"
+        android:id="@+id/tvUser"
+        app:actionViewClass="android.widget.TextView"
+        >
+    </item>
+    <item android:title="@string/empty"
+        android:id="@+id/tcClock"
+        app:actionViewClass="android.widget.TextClock"
+
+        >
+    </item>
+</menu>
