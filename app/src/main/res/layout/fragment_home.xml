@@ -33,6 +33,7 @@
             android:backgroundTint="#00FC8C04"
             android:hint="City"
             android:padding="12dp"
+            android:imeOptions="actionSearch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_default="percent" />
