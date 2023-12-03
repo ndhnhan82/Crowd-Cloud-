@@ -1,5 +1,15 @@
 package com.lasalle.crowdcloud;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextClock;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,16 +20,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
-
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 import fragments.Home;
 import fragments.Preference;
@@ -30,8 +34,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int FRAGMENT_PREFERENCE = 1;
     private int mCurrentFragment = FRAGMENT_HOME;
 
-    boolean isDark = true;
-    Switch swDark;
+    private boolean isDark = true;
+    private Switch swDark;
+    private TextView tvUser;
+    private TextClock tcClock;
+
 
     private NavigationView navigationView;
 
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initialize();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initialize() {
 
         drawerLayout = (DrawerLayout) findViewById( R.id.drawer_layout );
@@ -57,22 +65,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener( this );
         navigationView.getMenu().findItem( R.id.nav_preferences ).setChecked( true );
-        swDark = navigationView.getMenu().findItem(R.id.nav_switch).getActionView().findViewById(R.id.nav_switch);
-        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
-        {
-            swDark.setChecked(true);
+
+        tcClock = Objects.requireNonNull( navigationView.getMenu().findItem( R.id.tcClock ).getActionView() ).findViewById( R.id.tcClock );
+        tvUser = Objects.requireNonNull( navigationView.getMenu().findItem( R.id.tvUser ).getActionView() ).findViewById( R.id.tvUser );
+
+        swDark = Objects.requireNonNull( navigationView.getMenu().findItem( R.id.nav_switch ).getActionView() ).findViewById( R.id.nav_switch );
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            swDark.setChecked( true );
         }
-        swDark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        String email = Objects.requireNonNull( FirebaseAuth.getInstance().getCurrentUser() ).getEmail();
+        tvUser.setText( "Welcome "+ email+" !");
+        tvUser.setTextAppearance(this, R.style.Title);
+        tcClock.setTextAppearance(this, R.style.tcClock);
+
+        swDark.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    AppCompatDelegate.setDefaultNightMode( AppCompatDelegate.MODE_NIGHT_YES );
+
+                } else {
+                    AppCompatDelegate.setDefaultNightMode( AppCompatDelegate.MODE_NIGHT_NO );
                 }
             }
-        });
+        } );
 
         View navHeaderView = navigationView.getHeaderView( 0 );
         replaceFragment( new Home() );
@@ -96,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
             drawerLayout.closeDrawers();
-        }else if (id == R.id.nav_quit) {
+        } else if (id == R.id.nav_quit) {
             this.finish();
             getApplication().notifyAll();
             drawerLayout.closeDrawers();
@@ -104,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen( GravityCompat.START ))
@@ -111,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else
             super.onBackPressed();
     }
+
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace( R.id.content_frame, fragment );
