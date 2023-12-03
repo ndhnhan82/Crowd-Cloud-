@@ -84,11 +84,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (isChecked) {
                     AppCompatDelegate.setDefaultNightMode( AppCompatDelegate.MODE_NIGHT_YES );
 
+                    finish();
+
                 } else {
                     AppCompatDelegate.setDefaultNightMode( AppCompatDelegate.MODE_NIGHT_NO );
+
+                    finish();
                 }
             }
         } );
+
+        int defaultBackgroundColor = Color.parseColor("#408EE1");
+
+        // Check if night mode is active
+        int nightMode = AppCompatDelegate.getDefaultNightMode();
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+
+            toolbar.setBackgroundColor(Color.BLACK);
+
+        } else {
+
+            toolbar.setBackgroundColor(defaultBackgroundColor);
+
+        }
 
         View navHeaderView = navigationView.getHeaderView( 0 );
         replaceFragment( new Home() );

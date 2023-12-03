@@ -6,7 +6,9 @@
     android:padding="16dp"
     android:elevation="4dp"
     android:background="#408EE1"
-    tools:context="fragments.Home">
+    tools:context="fragments.Home"
+    android:id="@+id/frameLayoutHome"
+    >
 
     <!-- Background View for Added Depth -->
 
@@ -16,44 +18,52 @@
         android:layout_height="match_parent"
         />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CardViewSearch"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/rounded_corners"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="@dimen/cardview_default_elevation"
         >
 
-        <!-- AutoCompleteTextView for Location Input -->
-        <AutoCompleteTextView
-            android:id="@+id/edLocation"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_buttons"
-            android:backgroundTint="#00FC8C04"
-            android:hint="City"
-            android:padding="12dp"
-            android:imeOptions="actionSearch"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_default="percent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            >
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnFinish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_buttons"
-            android:text=""
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:drawableStart="@drawable/ic_action_name"
-            android:paddingStart="35dp"
-            android:paddingEnd="0dp"
-            app:layout_constraintBaseline_toBaselineOf="@id/edLocation"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <!-- AutoCompleteTextView for Location Input -->
+            <AutoCompleteTextView
+                android:id="@+id/edLocation"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_buttons"
+                android:backgroundTint="#00FC8C04"
+                android:hint="City"
+                android:imeOptions="actionSearch"
+                android:padding="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/rounded_buttons"
+                android:drawableStart="@drawable/ic_action_name"
+                android:paddingStart="35dp"
+                android:paddingEnd="0dp"
+                android:text=""
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:layout_constraintBaseline_toBaselineOf="@id/edLocation"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -88,7 +98,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp"
+                    app:cardElevation="@dimen/cardview_default_elevation"
                     app:cardBackgroundColor="#DCDCDC"
                     >
 
@@ -162,7 +172,7 @@
                     app:layout_constraintTop_toBottomOf="@id/CardView1"
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="10dp"
+                    app:cardElevation="@dimen/cardview_default_elevation"
                     app:cardBackgroundColor="#DCDCDC"
                     >
 
@@ -277,6 +287,7 @@
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
                     app:cardBackgroundColor="#DCDCDC"
+                    app:cardElevation="@dimen/cardview_default_elevation"
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -305,6 +316,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintTop_toBottomOf="@id/tvDay1_1"
                             app:layout_constraintStart_toStartOf="@id/tvDay1_1"
+                            app:layout_constraintEnd_toEndOf="@id/tvDay1_1"
                             android:layout_marginTop="10dp"
                             />
 
@@ -315,6 +327,7 @@
                             android:text="25°C"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon1_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon1_1"
+                            app:layout_constraintEnd_toEndOf="@id/ivIcon1_1"
                             android:layout_marginTop="10dp"
                             />
 
@@ -336,6 +349,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintTop_toBottomOf="@id/tvDay2_1"
                             app:layout_constraintStart_toStartOf="@id/tvDay2_1"
+                            app:layout_constraintEnd_toEndOf="@id/tvDay2_1"
                             android:layout_marginTop="10dp"
                             />
 
@@ -346,6 +360,7 @@
                             android:text="28°C"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon2_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon2_1"
+                            app:layout_constraintEnd_toEndOf="@id/ivIcon2_1"
                             android:layout_marginTop="10dp"
                              />
 
@@ -367,6 +382,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintTop_toBottomOf="@id/tvDay3_1"
                             app:layout_constraintStart_toStartOf="@id/tvDay3_1"
+                            app:layout_constraintEnd_toEndOf="@id/tvDay3_1"
                             android:layout_marginTop="10dp"
                              />
 
@@ -377,6 +393,7 @@
                             android:text="26°C"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon3_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon3_1"
+                            app:layout_constraintEnd_toEndOf="@id/ivIcon3_1"
                             android:layout_marginTop="10dp"
                              />
 
@@ -398,6 +415,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintTop_toBottomOf="@id/tvDay4_1"
                             app:layout_constraintStart_toStartOf="@id/tvDay4_1"
+                            app:layout_constraintEnd_toEndOf="@id/tvDay4_1"
                             android:layout_marginTop="10dp"
                              />
 
@@ -408,6 +426,7 @@
                             android:text="25°C"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon4_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon4_1"
+                            app:layout_constraintEnd_toEndOf="@id/tvDay4_1"
                             android:layout_marginTop="10dp"
                              />
 
@@ -429,6 +448,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintTop_toBottomOf="@id/tvDay5_1"
                             app:layout_constraintStart_toStartOf="@id/tvDay5_1"
+                            app:layout_constraintEnd_toEndOf="@id/tvDay5_1"
                             android:layout_marginTop="10dp"
                              />
 
@@ -439,6 +459,7 @@
                             android:text="27°C"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon5_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon5_1"
+                            app:layout_constraintEnd_toEndOf="@id/ivIcon5_1"
                             android:layout_marginTop="10dp"
                              />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -450,5 +471,4 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>

@@ -1,7 +1,10 @@
 package fragments;
 import android.animation.ObjectAnimator;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -60,7 +64,10 @@ public class Home extends Fragment {
     private Button btnFinish;
     private ScrollView svResults;
     private TextView tvCityResult, tvTemperatureResult, tvHumidityResult, tvDescriptionResult, tvWindSpeedResult, tvCloudinessResult, tvPressureResult;
+    private TextView tvTempDay1_1,tvTempDay2_1,tvTempDay3_1,tvTempDay4_1,tvTempDay5_1;
     private ImageView ivWeather;
+    private CardView cardViewSearch,cardView1,cardView2,cardView3;
+    private FrameLayout frameLayoutHome;
 
     // Adapter for AutoCompleteTextView
     private ArrayAdapter<String> autoCompleteAdapter;
@@ -128,6 +135,16 @@ public class Home extends Fragment {
         tvCloudinessResult = view.findViewById(R.id.tvCloudinessResult);
         tvPressureResult = view.findViewById(R.id.tvPressureResult);
         ivWeather = view.findViewById(R.id.ivWeather);
+        cardViewSearch = view.findViewById(R.id.CardViewSearch);
+        cardView1 = view.findViewById(R.id.CardView1);
+        cardView2 = view.findViewById(R.id.CardView2);
+        cardView3 = view.findViewById(R.id.CardView3);
+        frameLayoutHome = view.findViewById(R.id.frameLayoutHome);
+        tvTempDay1_1 = view.findViewById(R.id.tvTempDay1_1);
+        tvTempDay2_1 = view.findViewById(R.id.tvTempDay2_1);
+        tvTempDay3_1 = view.findViewById(R.id.tvTempDay3_1);
+        tvTempDay4_1 = view.findViewById(R.id.tvTempDay4_1);
+        tvTempDay5_1 = view.findViewById(R.id.tvTempDay5_1);
 
 
 
@@ -178,6 +195,25 @@ public class Home extends Fragment {
         });
 
 
+        int defaultBackgroundColor = Color.parseColor("#408EE1");
+        int defaultCardBackgroundColor = Color.parseColor("#DCDCDC");
+
+        // Check if night mode is active
+        int nightMode = AppCompatDelegate.getDefaultNightMode();
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            // Night mode is active, set the background color to black for FrameLayout and CardViews
+            frameLayoutHome.setBackgroundColor(Color.BLACK);
+            cardView1.setCardBackgroundColor(Color.GRAY);
+            cardView2.setCardBackgroundColor(Color.GRAY);
+            cardView3.setCardBackgroundColor(Color.GRAY);
+
+        } else {
+            // Night mode is not active, set the background color to your default color
+            frameLayoutHome.setBackgroundColor(defaultBackgroundColor);
+            cardView1.setCardBackgroundColor(defaultCardBackgroundColor);
+            cardView2.setCardBackgroundColor(defaultCardBackgroundColor);
+            cardView3.setCardBackgroundColor(defaultCardBackgroundColor);
+        }
 
         return view;
     }
@@ -420,5 +456,4 @@ public class Home extends Fragment {
             e.printStackTrace();
         }
     }
-
 }
