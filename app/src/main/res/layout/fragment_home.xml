@@ -67,6 +67,7 @@
             android:layout_height="0dp"
             tools:layout_editor_absoluteY="66dp"
             android:scrollbars="none"
+            android:background="@drawable/rounded_buttons"
             >
 
             <!-- Content inside the ScrollView -->
