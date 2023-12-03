@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -42,6 +44,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import model.LocationAutoCompleteTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,6 +116,7 @@ public class Home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString( ARG_PARAM1 );
             mParam2 = getArguments().getString( ARG_PARAM2 );
@@ -122,6 +127,9 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //Remove status bar from this fragment
+
 
         // Initialize UI components
         edLocation = view.findViewById(R.id.edLocation);
@@ -148,9 +156,19 @@ public class Home extends Fragment {
 
 
 
+
         //Remove visibility to Scroll View
         svResults.setVisibility(View.GONE);
 
+
+        // Set editor action listener for AutoCompleteTextView
+
+        // Inside your Fragment or Activity
+        AutoCompleteTextView edLocation = view.findViewById(R.id.edLocation);
+
+        // Set the AutoCompleteTextView adapter using LocationAutoCompleteTask
+        LocationAutoCompleteTask autoCompleteTask = new LocationAutoCompleteTask(edLocation);
+        edLocation.setAdapter(autoCompleteTask);
 
         // Set editor action listener for AutoCompleteTextView
         edLocation.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -160,6 +178,31 @@ public class Home extends Fragment {
                 return true;
             }
             return false;
+        });
+        edLocation.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_NULL) {
+                // Trigger the same action as if the search button was clicked
+                btnFinish.performClick();
+                return true;
+            }
+            return false;
+        });
+
+        // Set up the text change listener for AutoCompleteTextView
+        edLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Execute the AsyncTask to fetch and filter locations
+                new LocationAutoCompleteTask(edLocation);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
         });
 
 

@@ -306,7 +306,7 @@
                             android:textStyle="bold"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="5dp"
 
                             />
 
