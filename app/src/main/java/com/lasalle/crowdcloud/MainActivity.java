@@ -1,7 +1,9 @@
 package com.lasalle.crowdcloud;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -39,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Switch swDark;
     private TextView tvUser;
     private TextClock tcClock;
-
-
+    private Context context;
+    private Resources resources;
     private NavigationView navigationView;
 
 
@@ -62,8 +64,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.nav_drawer_open, R.string.nav_drawer_close );
         drawerLayout.addDrawerListener( toggle );
         toggle.syncState();
-        navigationView = (NavigationView) findViewById( R.id.navigation_view );
 
+        // Navigation menu
+        navigationView = (NavigationView) findViewById( R.id.navigation_view );
         navigationView.setNavigationItemSelectedListener( this );
         navigationView.getMenu().findItem( R.id.nav_preferences ).setChecked( true );
 
@@ -157,5 +160,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace( R.id.content_frame, fragment );
         transaction.commit();
+    }
+
+    public void setLanguage(){
+
+        resources = context.getResources();
+        // Home
+        navigationView.getMenu().findItem(R.id.nav_home)
+                .setTitle(resources.getString(R.string.home));
+        // Language
+        navigationView.getMenu().findItem(R.id.nav_language)
+                .setTitle(resources.getString(R.string.language));
+        // Light/Dark
+        navigationView.getMenu().findItem(R.id.nav_switch)
+                .setTitle(resources.getString(R.string.darkmode));
+        // Quit
+        navigationView.getMenu().findItem(R.id.nav_quit)
+                .setTitle(resources.getString(R.string.quit));
+
     }
 }

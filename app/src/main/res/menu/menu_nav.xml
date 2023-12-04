@@ -15,10 +15,13 @@
         <item
             android:id="@+id/nav_switch"
             android:icon="@drawable/ic_moon"
-            android:title="@string/light_dark"
+            android:title="@string/darkmode"
             app:actionViewClass="android.widget.Switch"
-            app:showAsAction="always"
-
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/nav_language"
+            android:title="Language"
+            android:icon="@drawable/ic_language"
             />
     </group>
 

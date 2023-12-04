@@ -83,7 +83,7 @@ public class Register extends Fragment implements View.OnClickListener {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
-                                addUpdateUser( new User(strEmail,"En") );
+                                addUpdateUser( new User(strEmail,"en") );
                                 Intent intent = new Intent( getActivity(), MainActivity.class );
                                 startActivity( intent );
                                 getActivity().finishAffinity();

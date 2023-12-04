@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Bienvenue Crowd Cloud</string>
+    <string name="app_title">Crowd Cloud</string>
+
+    // Login
+    <string name="login">Se connecter</string>
+    <string name="email_address">Adresse e-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="forgot_password">Mot de passe oublié</string>
+    <string name="signup">Enregistrer</string>
+
+    // Register
+    <string name="confirm_password">Confirmez le mot de passe</string>
+    <string name="policy">En vous connectant, vous acceptez nos conditions d\'utilisation et notre politique de confidentialité</string>
+    <string name="empty" />
+
+    // Navigation menu
+    <string name="nav_drawer_open" translatable="false">Open navigation</string>
+    <string name="nav_drawer_close">Close navigation</string>
+    <string name="home">Maison</string>
+    <string name="darkmode">Lumière/Nuit</string>
+    <string name="language">Langue</string>
+    <string name="another_option">Autres options</string>
+    <string name="quit">Quitter</string>
+
+    <string name="signout">Se déconnecter</string>
+    <string name="city">Ville</string>
+</resources>
