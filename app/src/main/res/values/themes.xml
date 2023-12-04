@@ -14,20 +14,13 @@
         <!-- Customize your theme here. -->
 
     </style>
-    <style name="Theme.CrowdCloud.Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">#FFC107</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-
-    </style>
+   <style name="ThemeForSearchBar">
+       <item name="backgroundColor">#F7827A</item>
+       <item name="android:padding">10dp</item>
+       <item name="textStartPadding">10dp</item>
+       <item name="android:singleLine">true</item>
+       <item name="android:layout_margin">10dp</item>
+   </style>
 
 
     <style name="tcClock">
