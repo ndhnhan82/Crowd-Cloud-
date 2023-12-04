@@ -3,8 +3,12 @@ import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -40,6 +45,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import model.LocationAutoCompleteTask;
 
 public class Home extends Fragment {
 
@@ -49,7 +55,10 @@ public class Home extends Fragment {
     private Button btnFinish;
     private ScrollView svResults;
     private TextView tvCityResult, tvTemperatureResult, tvHumidityResult, tvDescriptionResult, tvWindSpeedResult, tvCloudinessResult, tvPressureResult;
+    private TextView tvTempDay1_1,tvTempDay2_1,tvTempDay3_1,tvTempDay4_1,tvTempDay5_1;
     private ImageView ivWeather;
+    private CardView cardViewSearch,cardView1,cardView2,cardView3;
+    private FrameLayout frameLayoutHome;
 
     // Adapter for AutoCompleteTextView
     private ArrayAdapter<String> autoCompleteAdapter;
@@ -91,6 +100,7 @@ public class Home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
         if (getArguments() != null) {
         }
     }
@@ -100,6 +110,9 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //Remove status bar from this fragment
+
 
         // Initialize UI components
         edLocation = view.findViewById(R.id.edLocation);
@@ -113,11 +126,31 @@ public class Home extends Fragment {
         tvCloudinessResult = view.findViewById(R.id.tvCloudinessResult);
         tvPressureResult = view.findViewById(R.id.tvPressureResult);
         ivWeather = view.findViewById(R.id.ivWeather);
+        cardViewSearch = view.findViewById(R.id.CardViewSearch);
+        cardView1 = view.findViewById(R.id.CardView1);
+        cardView2 = view.findViewById(R.id.CardView2);
+        cardView3 = view.findViewById(R.id.CardView3);
+        frameLayoutHome = view.findViewById(R.id.frameLayoutHome);
+        tvTempDay1_1 = view.findViewById(R.id.tvTempDay1_1);
+        tvTempDay2_1 = view.findViewById(R.id.tvTempDay2_1);
+        tvTempDay3_1 = view.findViewById(R.id.tvTempDay3_1);
+        tvTempDay4_1 = view.findViewById(R.id.tvTempDay4_1);
+        tvTempDay5_1 = view.findViewById(R.id.tvTempDay5_1);
+
 
         edLocation.setBackgroundColor( Color.WHITE );
         //Remove visibility to Scroll View
         svResults.setVisibility(View.GONE);
 
+
+        // Set editor action listener for AutoCompleteTextView
+
+        // Inside your Fragment or Activity
+        AutoCompleteTextView edLocation = view.findViewById(R.id.edLocation);
+
+        // Set the AutoCompleteTextView adapter using LocationAutoCompleteTask
+        LocationAutoCompleteTask autoCompleteTask = new LocationAutoCompleteTask(edLocation);
+        edLocation.setAdapter(autoCompleteTask);
 
         // Set editor action listener for AutoCompleteTextView
         edLocation.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -127,6 +160,31 @@ public class Home extends Fragment {
                 return true;
             }
             return false;
+        });
+        edLocation.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_NULL) {
+                // Trigger the same action as if the search button was clicked
+                btnFinish.performClick();
+                return true;
+            }
+            return false;
+        });
+
+        // Set up the text change listener for AutoCompleteTextView
+        edLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Execute the AsyncTask to fetch and filter locations
+                new LocationAutoCompleteTask(edLocation);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
         });
 
 
@@ -162,6 +220,25 @@ public class Home extends Fragment {
         });
 
 
+        int defaultBackgroundColor = Color.parseColor("#408EE1");
+        int defaultCardBackgroundColor = Color.parseColor("#DCDCDC");
+
+        // Check if night mode is active
+        int nightMode = AppCompatDelegate.getDefaultNightMode();
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            // Night mode is active, set the background color to black for FrameLayout and CardViews
+            frameLayoutHome.setBackgroundColor(Color.BLACK);
+            cardView1.setCardBackgroundColor(Color.GRAY);
+            cardView2.setCardBackgroundColor(Color.GRAY);
+            cardView3.setCardBackgroundColor(Color.GRAY);
+
+        } else {
+            // Night mode is not active, set the background color to your default color
+            frameLayoutHome.setBackgroundColor(defaultBackgroundColor);
+            cardView1.setCardBackgroundColor(defaultCardBackgroundColor);
+            cardView2.setCardBackgroundColor(defaultCardBackgroundColor);
+            cardView3.setCardBackgroundColor(defaultCardBackgroundColor);
+        }
 
         return view;
     }
@@ -404,5 +481,4 @@ public class Home extends Fragment {
             e.printStackTrace();
         }
     }
-
 }
