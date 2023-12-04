@@ -18,13 +18,12 @@
             android:id="@+id/tieEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email_address"
-            android:textSize="20sp"
-            android:inputType="textEmailAddress"
-            android:drawableTint="#434141"
-            android:textColorHint="@android:color/holo_blue_dark"
             android:drawableStart="@android:drawable/sym_action_email"
-            />
+            android:drawableTint="#434141"
+            android:hint="@string/email_address"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@android:color/holo_blue_dark"
+            android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

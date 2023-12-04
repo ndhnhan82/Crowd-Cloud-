@@ -179,4 +179,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setTitle(resources.getString(R.string.quit));
 
     }
+
 }

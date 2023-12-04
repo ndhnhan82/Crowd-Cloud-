@@ -11,8 +11,12 @@
 
     // Register
     <string name="confirm_password">Confirmez le mot de passe</string>
-    <string name="policy">En vous connectant, vous acceptez nos conditions d\'utilisation et notre politique de confidentialité</string>
-    <string name="empty" />
+    <string name="policy">En vous connectant, vous acceptez \nnotre politique de confidentialité</string>
+    <string name="empty" translatable="false" />
+    <string name="emailEmpty">Votre email et votre mot de passe ne peuvent pas être vides. Veuillez entrer à nouveau et réessayer !</string>
+    <string name="emailPass">Un email vous sera envoyé bientot!</string>
+    <string name="passwordWrong">Votre email ou votre mot de passe n\'est pas correct. Veuillez réessayer ou enregistrer un nouvel utilisateur !</string>
+    <string name="notification"></string>
 
     // Navigation menu
     <string name="nav_drawer_open" translatable="false">Open navigation</string>
