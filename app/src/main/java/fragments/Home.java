@@ -6,11 +6,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -117,6 +119,15 @@ public class Home extends Fragment {
         svResults.setVisibility(View.GONE);
 
 
+        // Set editor action listener for AutoCompleteTextView
+        edLocation.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_NULL) {
+                // Trigger the same action as if the search button was clicked
+                btnFinish.performClick();
+                return true;
+            }
+            return false;
+        });
 
 
         // Set onClickListener for the Finish button
@@ -292,11 +303,7 @@ public class Home extends Fragment {
     }
 
     private void updateDayUI(String dayOfWeek, double temperature, String weatherIcon, int dayIndex) {
-        // Implement the logic to update the UI components for each day
-        // For example, update the labels, image views, and temperature values based on the forecast data
-        // You can access the corresponding views using their IDs and set their text or image resources
 
-        // Example (you need to replace these with your actual view IDs):
         TextView dayLabel = getView().findViewById(getDayLabelId(dayIndex));
         ImageView weatherImageView = getView().findViewById(getWeatherImageViewId(dayIndex));
         TextView temperatureLabel = getView().findViewById(getTemperatureLabelId(dayIndex));
@@ -325,23 +332,17 @@ public class Home extends Fragment {
     }
 
     private int getDayLabelId(int dayIndex) {
-        // Implement the logic to get the ID of the day label based on the index
-        // For example, if you have labels with IDs tvDay1, tvDay2, ..., you can return R.id.tvDay1 + dayIndex
-        // Replace R.id.tvDay1 with the actual ID of your day labels
+
         return R.id.tvDay1_1 + dayIndex;
     }
 
     private int getWeatherImageViewId(int dayIndex) {
-        // Implement the logic to get the ID of the weather image view based on the index
-        // For example, if you have image views with IDs ivWeather1, ivWeather2, ..., you can return R.id.ivWeather1 + dayIndex
-        // Replace R.id.ivWeather1 with the actual ID of your weather image views
+
         return R.id.ivIcon1_1 + dayIndex;
     }
 
     private int getTemperatureLabelId(int dayIndex) {
-        // Implement the logic to get the ID of the temperature label based on the index
-        // For example, if you have labels with IDs tvTemperature1, tvTemperature2, ..., you can return R.id.tvTemperature1 + dayIndex
-        // Replace R.id.tvTemperature1 with the actual ID of your temperature labels
+
         return R.id.tvTempDay1_1 + dayIndex;
     }
 
