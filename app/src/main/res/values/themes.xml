@@ -34,7 +34,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@android:color/holo_green_light</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:format12Hour">hh:mm:ss A</item>
+        <item name="android:format12Hour">h:mm:ss a - d MMM, yyyy</item>
     </style>
     <style name="Title">
         <item name="android:textSize">20sp</item>

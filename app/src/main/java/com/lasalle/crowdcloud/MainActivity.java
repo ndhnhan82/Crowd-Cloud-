@@ -1,6 +1,7 @@
 package com.lasalle.crowdcloud;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -130,6 +131,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
             drawerLayout.closeDrawers();
+        }else if (id == R.id.nav_SignOut) {
+            FirebaseAuth.getInstance().signOut();
+            this.finish();
+            Intent intent = new Intent( this, LoginActivity.class );
+            startActivity( intent );
         } else if (id == R.id.nav_quit) {
             this.finish();
             getApplication().notifyAll();
