@@ -13,11 +13,11 @@ public class User {
     private String emailAddress;
     private String languagePrefer;
 
-
-
-    public User(String emailAddress) {
+    public User(String emailAddress, String languagePrefer) {
         this.emailAddress = emailAddress;
+        this.languagePrefer = languagePrefer;
     }
+
     public String getEmailAddress() {
         return emailAddress;
     }
