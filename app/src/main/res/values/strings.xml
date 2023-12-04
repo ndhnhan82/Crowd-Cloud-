@@ -21,4 +21,5 @@
     <string name="another_option">Another option</string>
     <string name="light_dark">Light/Dark</string>
     <string name="signout">SignOut</string>
+    <string name="city">City</string>
 </resources>

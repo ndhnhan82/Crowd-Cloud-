@@ -18,32 +18,28 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:background="#F6CDC0"
         >
 
         <!-- AutoCompleteTextView for Location Input -->
         <AutoCompleteTextView
             android:id="@+id/edLocation"
-            android:layout_width="230dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_buttons"
-            android:singleLine="true"
-            android:backgroundTint="#00FC8C04"
-            android:hint="City"
-            android:padding="12dp"
-            android:imeOptions="actionSearch"
+            android:imeOptions="actionNext"
+            style="@style/ThemeForSearchBar"
+            android:hint="@string/city"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_default="percent" />
+            app:layout_constraintRight_toLeftOf="@id/btnFinish" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFinish"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/rounded_buttons"
             android:text=""
             android:textAllCaps="false"
