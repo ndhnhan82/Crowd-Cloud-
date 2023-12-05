@@ -3,8 +3,6 @@ package fragments;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,14 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 
-import com.lasalle.crowdcloud.MainActivity;
 import com.lasalle.crowdcloud.R;
-import com.lasalle.crowdcloud.adapter.PlaceAutoSuggestAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,13 +53,7 @@ public class Preference extends Fragment {
         return fragment;
     }
 
-    Switch sbTheme;
-    AutoCompleteTextView edLocation;
-    Button btnFinish;
-    Boolean switchChecked = false;
-    View view;
 
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         if (getArguments() != null) {
@@ -78,17 +65,8 @@ public class Preference extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        context = container.getContext();
 
-        view = inflater.inflate( R.layout.fragment_preference, container, false );
-        edLocation = view.findViewById(R.id.edLocation);
-        btnFinish = view.findViewById(R.id.btnFinish);
-
-        edLocation.setAdapter(new PlaceAutoSuggestAdapter(context,
-                android.R.layout.simple_list_item_1));
-
-        // Inflate the layout for this fragment
-        return view;
+        return  null;
     }
 
 }

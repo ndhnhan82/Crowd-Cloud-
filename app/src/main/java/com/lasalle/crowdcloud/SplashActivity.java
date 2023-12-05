@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import model.LocaleHelper;
+import model.User;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -40,10 +41,12 @@ public class SplashActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // Set LANGUAGE
-            // If no NO USER LOGIN
+        // If no NO USER LOGIN
         if (currentUser==null){
-            languagePrefer = "en";
-
+            // get languagePrefer from nearest login
+                // or NOT, set languagePrefer = "en"
+            if(languagePrefer==null)
+                languagePrefer = "en";
             context = LocaleHelper.setLocale(SplashActivity.this, languagePrefer);
             resources = context.getResources();
             tvSlash.setText(resources.getString(R.string.app_name));
@@ -51,13 +54,14 @@ public class SplashActivity extends AppCompatActivity {
             Handler handler = new Handler();
             handler.postDelayed(() -> toLoginActivity(),1000);
         }
-            // if USER LOGIN
+        // if USER LOGIN
         else {
             getLanguage(new languageCallBack() {
                 @Override
                 public void onLanguageUpdate(String language) {
                     if (currentUser == null) {
-                        languagePrefer = "en";
+                        if(languagePrefer==null)
+                            languagePrefer = "en";
                     } else {
                         languagePrefer = language;
                     }

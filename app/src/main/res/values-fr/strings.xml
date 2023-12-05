@@ -16,7 +16,8 @@
     <string name="emailEmpty">Votre email et votre mot de passe ne peuvent pas être vides. Veuillez entrer à nouveau et réessayer !</string>
     <string name="emailPass">Un email vous sera envoyé bientot!</string>
     <string name="passwordWrong">Votre email ou votre mot de passe n\'est pas correct. Veuillez réessayer ou enregistrer un nouvel utilisateur !</string>
-    <string name="notification"></string>
+    <string name="notsamepass">Le mot de passe confirmé et le mot de passe ne sont pas corrects</string>
+    <string name="somethingwrong">Il y a quelque chose qui ne va pas! Veuillez réessayer!</string>
 
     // Navigation menu
     <string name="nav_drawer_open" translatable="false">Open navigation</string>
@@ -25,8 +26,8 @@
     <string name="darkmode">Lumière/Nuit</string>
     <string name="language">Langue</string>
     <string name="another_option">Autres options</string>
-    <string name="quit">Quitter</string>
-
+    <string name="quit">Sorti</string>
     <string name="signout">Se déconnecter</string>
+
     <string name="city">Ville</string>
 </resources>

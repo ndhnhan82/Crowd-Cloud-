@@ -25,7 +25,9 @@
             />
     </group>
 
-    <item android:title="@string/another_option">
+    <item
+        android:id="@+id/nav_otherOptions"
+        android:title="@string/another_option">
         <menu>
             <item
                 android:id="@+id/nav_quit"

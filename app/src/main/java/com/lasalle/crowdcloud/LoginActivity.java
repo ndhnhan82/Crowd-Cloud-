@@ -17,6 +17,10 @@ public class LoginActivity extends AppCompatActivity {
     private String languagePrefer;
     private Context context;
     private Resources resources;
+    ViewPager mVpLogin;
+    TabLayout tabLayout;
+    TextView tvLogin;
+    TextView tvPolicy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     private void initialize() {
         languagePrefer = getIntent().getStringExtra("languagePrefer");
 
-        ViewPager mVpLogin = findViewById(R.id.vpgLogin);
-        TabLayout tabLayout = findViewById(R.id.tlLogin );
-        TextView tvLogin = findViewById(R.id.tvLogin);
-        TextView tvPolicy = findViewById(R.id.tvPolicy);
+        mVpLogin = findViewById(R.id.vpgLogin);
+        tabLayout = findViewById(R.id.tlLogin );
+        tvLogin = findViewById(R.id.tvLogin);
+        tvPolicy = findViewById(R.id.tvPolicy);
 
         tabLayout.setupWithViewPager(mVpLogin);
         mVpLogin.setAdapter(new LoginAdapter(getSupportFragmentManager()));
@@ -39,6 +43,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // Load LANGUAGE
         context = LocaleHelper.setLocale(LoginActivity.this, languagePrefer);
+        loadLanguage();
+    }
+
+    private void loadLanguage() {
         resources = context.getResources();
 
         tvLogin.setText(resources.getString(R.string.login));
@@ -46,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setText(resources.getString(R.string.login));
         tabLayout.getTabAt(1).setText(resources.getString(R.string.signup));
     }
+
     public String getLanguage(){
         return languagePrefer;
     }

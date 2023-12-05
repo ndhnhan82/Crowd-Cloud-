@@ -64,8 +64,8 @@ public class Login extends Fragment implements View.OnClickListener {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String strEmail = tieEmailAddress.getText().toString().trim();
         String strPassword = tiePassword.getText().toString();
-        String safeEmail = strEmail.replace( "@", "-" )
-                .replace( ".", "-" );
+        //String safeEmail = strEmail.replace( "@", "-" )
+        //        .replace( ".", "-" );
 
 
 
@@ -82,7 +82,7 @@ public class Login extends Fragment implements View.OnClickListener {
             mAuth.signInWithEmailAndPassword( strEmail, strPassword )
                     .addOnCompleteListener( getActivity(), task -> {
                         if (task.isSuccessful()) {
-                            gotoMainActivity();
+                            gotoMainActivity(strEmail);
 
                         } else
                             showAlert(resources.getString(R.string.passwordWrong) );
@@ -91,8 +91,9 @@ public class Login extends Fragment implements View.OnClickListener {
     }
 
 
-    private void gotoMainActivity() {
+    private void gotoMainActivity(String email) {
         Intent intent = new Intent( getContext(), MainActivity.class );
+        intent.putExtra("email",email);
         startActivity( intent );
         getActivity().finishAffinity();
     }
