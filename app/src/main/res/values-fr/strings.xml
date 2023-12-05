@@ -29,5 +29,15 @@
     <string name="quit">Sorti</string>
     <string name="signout">Se déconnecter</string>
 
+    // Home
     <string name="city">Ville</string>
+    <string name="windspeed">Vent</string>
+    <string name="cloudiness">Nuage</string>
+    <string name="pressure">Pression</string>
+    <string name="humidity">Humidité</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="thursday">Juedi</string>
+    <string name="friday">Vedredi</string>
 </resources>

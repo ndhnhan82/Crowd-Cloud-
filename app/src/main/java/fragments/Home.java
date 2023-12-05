@@ -1,5 +1,7 @@
 package fragments;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -10,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +46,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import model.LocaleHelper;
 import model.LocationAutoCompleteTask;
 
 public class Home extends Fragment {
 
-
+    private Resources resources;
+    private Context context;
     // Fragmented Assets
     private AutoCompleteTextView edLocation;
     private Button btnFinish;
@@ -240,7 +243,30 @@ public class Home extends Fragment {
             cardView3.setCardBackgroundColor(defaultCardBackgroundColor);
         }
 
+        // load Language
+        context = container.getContext();
+        String languagePrefer = LocaleHelper.getLanguage(context).toLowerCase();
+
+        context = LocaleHelper.setLocale(context, languagePrefer);
+
+        changeHomeLanguage(languagePrefer);
+
         return view;
+    }
+
+    private void changeHomeLanguage(String languagePrefer) {
+        resources = context.getResources();
+
+        edLocation.setHint(resources.getString(R.string.city));
+        TextView tv1 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvWindSpeedLabel);
+        tv1.setText(resources.getString(R.string.windspeed));
+        TextView tv2 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvCloudinessLabel);
+        tv2.setText(resources.getString(R.string.cloudiness));
+        TextView tv3 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvPressureLabel);
+        tv3.setText(resources.getString(R.string.pressure));
+        TextView tv4 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvHumidityLabel);
+        tv4.setText(resources.getString(R.string.humidity));
+
     }
 
     private void fetchWeatherData(String location) {
