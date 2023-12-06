@@ -42,7 +42,6 @@
     <item android:title="@string/empty"
         android:id="@+id/tcClock"
         app:actionViewClass="android.widget.TextClock"
-
         >
     </item>
 </menu>

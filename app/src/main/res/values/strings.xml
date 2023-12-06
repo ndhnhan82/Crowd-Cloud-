@@ -26,4 +26,25 @@
     <string name="latitude_longitude">Latitude - Longitude</string>
     <string name="history">History</string>
     <string name="home">Home</string>
+    <string name="description_results">Description Results</string>
+    <string name="temp_results">Temp Results</string>
+    <string name="city_results">City Results</string>
+    <string name="wind_speed">Wind Speed:</string>
+    <string name="icon_weather">Icon Weather</string>
+    <string name="wind_speed_results">Wind Speed Results</string>
+    <string name="cloudiness">Cloudiness:</string>
+    <string name="cloudiness_results">Cloudiness Results</string>
+    <string name="pressure">Pressure:</string>
+    <string name="pressure_results">Pressure Results</string>
+    <string name="humidity_results">Humidity Results</string>
+    <string name="humidity">Humidity:</string>
+    <string name="monday">Monday</string>
+    <string name="_25_c">25°C</string>
+    <string name="_28_c">28°C</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="_26_c">26°C</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="montreal_10_c">Montreal -10°C</string>
 </resources>

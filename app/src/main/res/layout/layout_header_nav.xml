@@ -10,16 +10,17 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:contentDescription="@string/app_title"
+        android:id="@+id/imSideBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher_round"
         />
     <TextView
-        android:id="@+id/tvUserNameLabel"
+        android:id="@+id/tvWeatherSidebar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Montreal -10°C"
+        android:text="@string/montreal_10_c"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:textStyle="bold"

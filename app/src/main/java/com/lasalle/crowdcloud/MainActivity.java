@@ -1,6 +1,5 @@
 package com.lasalle.crowdcloud;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initialize();
     }
 
-    @SuppressLint("SetTextI18n")
     private void initialize() {
 
         drawerLayout = (DrawerLayout) findViewById( R.id.drawer_layout );
@@ -70,10 +68,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             swDark.setChecked( true );
         }
-        String email = Objects.requireNonNull( FirebaseAuth.getInstance().getCurrentUser() ).getEmail();
-        tvUser.setText( "Welcome "+ email+" !");
-        tvUser.setTextAppearance(this, R.style.Title);
-        tcClock.setTextAppearance(this, R.style.tcClock);
+        String email =  FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        tvUser.setText( String.format(  "Welcome %s !",email) );
+        tvUser.setTextAppearance( this, R.style.Title );
+        tcClock.setTextAppearance( this, R.style.tcClock );
 
         swDark.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -91,17 +89,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         } );
 
-        int defaultBackgroundColor = Color.parseColor("#408EE1");
+        int defaultBackgroundColor = Color.parseColor( "#408EE1" );
 
         // Check if night mode is active
         int nightMode = AppCompatDelegate.getDefaultNightMode();
         if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
 
-            toolbar.setBackgroundColor(Color.BLACK);
+            toolbar.setBackgroundColor( Color.BLACK );
 
         } else {
 
-            toolbar.setBackgroundColor(defaultBackgroundColor);
+            toolbar.setBackgroundColor( defaultBackgroundColor );
 
         }
 
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
             drawerLayout.closeDrawers();
-        }else if (id == R.id.nav_SignOut) {
+        } else if (id == R.id.nav_SignOut) {
             FirebaseAuth.getInstance().signOut();
             this.finish();
             Intent intent = new Intent( this, LoginActivity.class );
