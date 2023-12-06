@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
+    android:paddingLeft="@dimen/_10dp"
+    android:paddingRight="@dimen/_10dp"
     android:elevation="4dp"
     android:background="#408EE1"
     tools:context="fragments.Home"
@@ -23,33 +24,36 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_gravity="bottom"
-        android:src="@drawable/no_city" />
+        android:src="@drawable/no_city"
+        android:contentDescription="@string/icon_weather" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/CardViewSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="50dp"
+        android:backgroundTint="@android:color/holo_orange_light"
         app:cardElevation="@dimen/cardview_default_elevation"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             >
 
             <!-- AutoCompleteTextView for Location Input -->
             <AutoCompleteTextView
                 android:id="@+id/edLocation"
-                android:layout_width="275dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_buttons"
-                android:backgroundTint="#00FC8C04"
-                android:hint="City"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:hint="@string/city"
                 android:imeOptions="actionSearch"
-                android:padding="12dp"
+                android:shadowRadius="20"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@null"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent" />
@@ -83,7 +87,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            tools:layout_editor_absoluteY="66dp"
             android:scrollbars="none"
             android:background="@drawable/rounded_buttons"
             >
@@ -93,7 +96,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:padding="10dp"
                 >
 
@@ -104,70 +106,70 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
+                    android:backgroundTint="@color/cardView"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="@dimen/cardview_default_elevation"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardElevation="0dp"
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/CL1"
-                        android:layout_width="match_parent"
+                        android:layout_width="352dp"
                         android:layout_height="match_parent"
                         android:padding="15dp"
-                        >
+                        tools:ignore="TextSizeCheck">
 
                         <TextView
                             android:id="@+id/tvDescriptionResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Description Results"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/description_results"
+                            android:textColor="#39372B"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/ivWeather"
-                            android:layout_marginTop="10dp"
-                             />
+                            app:layout_constraintTop_toBottomOf="@id/ivWeather" />
 
                         <ImageView
                             android:id="@+id/ivWeather"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:src="@tools:sample/avatars"
+                            android:layout_marginTop="20dp"
+                            android:contentDescription="@string/icon_weather"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvTemperatureResult"
-                            android:layout_marginTop="20dp"
 
-                            />
+                            tools:ignore="ImageContrastCheck"
+                            tools:src="@tools:sample/avatars" />
 
                         <TextView
                             android:id="@+id/tvCityResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="City Results"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/city_results"
                             android:textColor="@color/black"
-                            android:textSize="30dp"
+                            android:textSize="30sp"
                             android:textStyle="bold"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            android:layout_marginTop="10dp"
-                            />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tvTemperatureResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Temp Results"
-                            android:textColor="@color/black"
-                            android:textSize="30dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/temp_results"
+                            android:textColor="#7A012B"
+                            android:textSize="50sp"
                             android:textStyle="bold"
-                            tools:layout_editor_absoluteY="30dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvCityResult"
-                            android:layout_marginTop="10dp"
-                            />
+                            tools:layout_editor_absoluteY="30dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -179,8 +181,8 @@
                     app:layout_constraintTop_toBottomOf="@id/CardView1"
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="@dimen/cardview_default_elevation"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="@color/cardView"
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -195,12 +197,12 @@
                             android:id="@+id/tvWindSpeedLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wind Speed: "
+                            android:text="@string/wind_speed"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
 
                              />
 
@@ -208,7 +210,8 @@
                             android:id="@+id/tvWindSpeedResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wind Speed Results"
+                            android:text="@string/wind_speed_results"
+                            android:textColor="@color/weatherCondition"
                             app:layout_constraintLeft_toRightOf="@id/tvWindSpeedLabel"
                             app:layout_constraintTop_toTopOf="parent"
                              />
@@ -217,7 +220,7 @@
                             android:id="@+id/tvCloudinessLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cloudiness: "
+                            android:text="@string/cloudiness"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintTop_toBottomOf="@id/tvWindSpeedLabel"
@@ -229,7 +232,8 @@
                             android:id="@+id/tvCloudinessResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cloudiness Results"
+                            android:textColor="@color/weatherCondition"
+                            android:text="@string/cloudiness_results"
                             app:layout_constraintStart_toStartOf="@id/tvWindSpeedResult"
                             app:layout_constraintTop_toBottomOf="@id/tvWindSpeedResult"
                             android:layout_marginTop="10dp"
@@ -239,29 +243,31 @@
                             android:id="@+id/tvPressureLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pressure: "
+                            android:text="@string/pressure"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/tvWindSpeedResult"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="@dimen/_10dp"
                              />
 
                         <TextView
                             android:id="@+id/tvPressureResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pressure Results"
+                            android:text="@string/pressure_results"
+                            android:textColor="@color/weatherCondition"
                             app:layout_constraintLeft_toRightOf="@id/tvPressureLabel"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                              />
 
                         <TextView
                             android:id="@+id/tvHumidityResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Humidity Results"
+                            android:textColor="@color/weatherCondition"
+                            android:text="@string/humidity_results"
                             app:layout_constraintTop_toBottomOf="@id/tvPressureResult"
                             app:layout_constraintStart_toStartOf="@id/tvPressureResult"
                             android:layout_marginTop="10dp"
@@ -271,7 +277,7 @@
                             android:id="@+id/tvHumidityLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Humidity: "
+                            android:text="@string/humidity"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/tvPressureLabel"
@@ -289,7 +295,7 @@
                     app:layout_constraintTop_toBottomOf="@id/CardView2"
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="#FFFFFF"
+                    android:backgroundTint="@color/cardView"
                     app:cardElevation="@dimen/cardview_default_elevation"
                     >
 
@@ -298,18 +304,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="15dp"
+                        app:cardElevation="0dp"
                         >
 
                         <TextView
                             android:id="@+id/tvDay1_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Monday"
+                            android:text="@string/monday"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginStart="5dp"
 
                             />
 
@@ -321,29 +328,30 @@
                             app:layout_constraintStart_toStartOf="@id/tvDay1_1"
                             app:layout_constraintEnd_toEndOf="@id/tvDay1_1"
                             android:layout_marginTop="10dp"
-                            />
+                            android:importantForAccessibility="no" />
 
                         <TextView
                             android:id="@+id/tvTempDay1_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25°C"
+                            android:text="@string/_25_c"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon1_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon1_1"
                             app:layout_constraintEnd_toEndOf="@id/ivIcon1_1"
                             android:layout_marginTop="10dp"
+                            android:textColor="@color/weatherCondition"
                             />
 
                         <TextView
                             android:id="@+id/tvDay2_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tuesday"
+                            android:text="@string/tuesday"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/tvDay1_1"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             />
 
                         <ImageView
@@ -354,29 +362,30 @@
                             app:layout_constraintStart_toStartOf="@id/tvDay2_1"
                             app:layout_constraintEnd_toEndOf="@id/tvDay2_1"
                             android:layout_marginTop="10dp"
-                            />
+                            android:importantForAccessibility="no" />
 
                         <TextView
                             android:id="@+id/tvTempDay2_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="28°C"
+                            android:text="@string/_28_c"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon2_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon2_1"
                             app:layout_constraintEnd_toEndOf="@id/ivIcon2_1"
                             android:layout_marginTop="10dp"
+                            android:textColor="@color/weatherCondition"
                              />
 
                         <TextView
                             android:id="@+id/tvDay3_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wednesday"
+                            android:text="@string/wednesday"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/tvDay2_1"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                              />
 
                         <ImageView
@@ -387,29 +396,30 @@
                             app:layout_constraintStart_toStartOf="@id/tvDay3_1"
                             app:layout_constraintEnd_toEndOf="@id/tvDay3_1"
                             android:layout_marginTop="10dp"
-                             />
+                            android:importantForAccessibility="no" />
 
                         <TextView
                             android:id="@+id/tvTempDay3_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="26°C"
+                            android:text="@string/_26_c"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon3_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon3_1"
                             app:layout_constraintEnd_toEndOf="@id/ivIcon3_1"
                             android:layout_marginTop="10dp"
+                            android:textColor="@color/weatherCondition"
                              />
 
                         <TextView
                             android:id="@+id/tvDay4_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thursday"
+                            android:text="@string/thursday"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/tvDay3_1"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                              />
 
                         <ImageView
@@ -420,29 +430,30 @@
                             app:layout_constraintStart_toStartOf="@id/tvDay4_1"
                             app:layout_constraintEnd_toEndOf="@id/tvDay4_1"
                             android:layout_marginTop="10dp"
-                             />
+                            android:importantForAccessibility="no" />
 
                         <TextView
                             android:id="@+id/tvTempDay4_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25°C"
+                            android:text="@string/_25_c"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon4_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon4_1"
                             app:layout_constraintEnd_toEndOf="@id/ivIcon4_1"
                             android:layout_marginTop="10dp"
+                            android:textColor="@color/weatherCondition"
                              />
 
                         <TextView
                             android:id="@+id/tvDay5_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Friday"
+                            android:text="@string/friday"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/tvDay4_1"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                              />
 
                         <ImageView
@@ -453,17 +464,18 @@
                             app:layout_constraintStart_toStartOf="@id/tvDay5_1"
                             app:layout_constraintEnd_toEndOf="@id/tvDay5_1"
                             android:layout_marginTop="10dp"
-                             />
+                            android:importantForAccessibility="no" />
 
                         <TextView
                             android:id="@+id/tvTempDay5_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="27°C"
+                            android:text="@string/_28_c"
                             app:layout_constraintTop_toBottomOf="@id/ivIcon5_1"
                             app:layout_constraintStart_toStartOf="@id/ivIcon5_1"
                             app:layout_constraintEnd_toEndOf="@id/ivIcon5_1"
                             android:layout_marginTop="10dp"
+                            android:textColor="@color/weatherCondition"
                              />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
