@@ -221,7 +221,7 @@ public class Home extends Fragment {
 
 
         int defaultBackgroundColor = Color.parseColor("#408EE1");
-        int defaultCardBackgroundColor = Color.parseColor("#DCDCDC");
+        int defaultCardBackgroundColor = Color.parseColor("#FFFFFF");
 
         // Check if night mode is active
         int nightMode = AppCompatDelegate.getDefaultNightMode();
