@@ -18,6 +18,13 @@
         android:layout_height="match_parent"
         />
 
+    <ImageView
+        android:id="@+id/bottomImageView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_gravity="bottom"
+        android:src="@drawable/no_city" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/CardViewSearch"
         android:layout_width="match_parent"
@@ -99,7 +106,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="@dimen/cardview_default_elevation"
-                    app:cardBackgroundColor="#DCDCDC"
+                    app:cardBackgroundColor="#FFFFFF"
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -173,7 +180,7 @@
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="@dimen/cardview_default_elevation"
-                    app:cardBackgroundColor="#DCDCDC"
+                    app:cardBackgroundColor="#FFFFFF"
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -202,7 +209,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Wind Speed Results"
-                            android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/tvWindSpeedLabel"
                             app:layout_constraintTop_toTopOf="parent"
                              />
@@ -224,7 +230,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Cloudiness Results"
-                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@id/tvWindSpeedResult"
                             app:layout_constraintTop_toBottomOf="@id/tvWindSpeedResult"
                             android:layout_marginTop="10dp"
@@ -247,7 +252,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Pressure Results"
-                            android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/tvPressureLabel"
                             app:layout_constraintTop_toTopOf="parent"
                             android:layout_marginLeft="10dp"
@@ -258,7 +262,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Humidity Results"
-                            android:textStyle="bold"
                             app:layout_constraintTop_toBottomOf="@id/tvPressureResult"
                             app:layout_constraintStart_toStartOf="@id/tvPressureResult"
                             android:layout_marginTop="10dp"
@@ -286,7 +289,7 @@
                     app:layout_constraintTop_toBottomOf="@id/CardView2"
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="#DCDCDC"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardElevation="@dimen/cardview_default_elevation"
                     >
 
