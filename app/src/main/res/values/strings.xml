@@ -22,4 +22,8 @@
     <string name="light_dark">Light/Dark</string>
     <string name="signout">SignOut</string>
     <string name="city">City</string>
+    <string name="location">Location</string>
+    <string name="latitude_longitude">Latitude - Longitude</string>
+    <string name="history">History</string>
+    <string name="home">Home</string>
 </resources>

@@ -7,7 +7,6 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 
-import fragments.Preference;
 import model.PlaceAPI;
 
 public class PlaceAutoSuggestAdapter extends ArrayAdapter implements Filterable {
