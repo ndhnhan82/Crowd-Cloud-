@@ -1,4 +1,5 @@
 package fragments;
+
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +32,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.lasalle.crowdcloud.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -45,6 +48,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import model.DatabaseManagement;
+import model.History;
 import model.LocationAutoCompleteTask;
 
 public class Home extends Fragment {
@@ -68,6 +73,11 @@ public class Home extends Fragment {
 
     //API
 
+    //Firebase DatabaseReference
+    private DatabaseReference historyRef;
+    private String safeEmail;
+
+    private static final String ARG_PARAM = "FromUserHistoryList";
     private static final String api = "bd5e378503939ddaee76f12ad7a97608";
     private static final String url = "https://api.openweathermap.org/data/2.5/weather";
     private static final String imageUrl = "https://openweathermap.org/img/wn/";
@@ -77,32 +87,30 @@ public class Home extends Fragment {
     //Formatting
     DecimalFormat df = new DecimalFormat("#.##");
 
-
+    private String location;
     public Home() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Home.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Home newInstance(String param1, String param2) {
-        Home fragment = new Home();
-        Bundle args = new Bundle();
-        return fragment;
-    }
+//    public static Home newInstance(String param) {
+//        Home fragment = new Home();
+//        Bundle args = new Bundle();
+//        args.putString( ARG_PARAM, param );
+//        fragment.setArguments( args );
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+        location = "Montreal";
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            location = bundle.getString("FromUserHistoryList","Montreal");
+            }
+        Log.d( "TESTING", location );
+//        svResults.setVisibility( View.VISIBLE );
 
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -137,13 +145,11 @@ public class Home extends Fragment {
         tvTempDay4_1 = view.findViewById(R.id.tvTempDay4_1);
         tvTempDay5_1 = view.findViewById(R.id.tvTempDay5_1);
 
-
+        safeEmail = DatabaseManagement.getSafeEmailOfCurrentUser();
+        historyRef = FirebaseDatabase.getInstance().getReference("Users")
+                .child( safeEmail ).child( "History" );
         edLocation.setBackgroundColor( Color.WHITE );
-        //Remove visibility to Scroll View
-        svResults.setVisibility(View.GONE);
-
-
-        // Set editor action listener for AutoCompleteTextView
+        fetchWeatherData(location);
 
         // Inside your Fragment or Activity
         AutoCompleteTextView edLocation = view.findViewById(R.id.edLocation);
@@ -290,7 +296,6 @@ public class Home extends Fragment {
         requestQueue.add(geoLocateRequest);
     }
 
-
     private void handleGeolocationResponse(String response, String location) {
         try {
             // Parsing the JSON response for geolocation
@@ -305,6 +310,7 @@ public class Home extends Fragment {
 
                 // Now, use the latitude and longitude to make the forecast API call
                 fetchForecastData(location, latitude, longitude);
+                saveLocationToHistory(location.toUpperCase(), latitude, longitude);
             } else {
                 Toast.makeText(getContext(), "Geolocation data not found", Toast.LENGTH_SHORT).show();
             }
@@ -312,6 +318,11 @@ public class Home extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveLocationToHistory(String location, double latitude, double longitude) {
+        History history = new History(location,latitude,longitude);
+        historyRef.child( location ).setValue( history);
     }
 
     private void fetchForecastData(String location, double latitude, double longitude) {
@@ -422,8 +433,6 @@ public class Home extends Fragment {
 
         return R.id.tvTempDay1_1 + dayIndex;
     }
-
-
 
     private void handleWeatherResponse(String response) {
         try {

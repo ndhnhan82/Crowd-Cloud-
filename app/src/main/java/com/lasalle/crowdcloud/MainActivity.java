@@ -27,21 +27,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 import fragments.Home;
-import fragments.Preference;
+import fragments.UserHistory;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_PREFERENCE = 1;
+    private static final int FRAGMENT_HISTORY = 1;
     private int mCurrentFragment = FRAGMENT_HOME;
 
     private boolean isDark = true;
     private Switch swDark;
     private TextView tvUser;
-    private TextClock tcClock;
-
-
-    private NavigationView navigationView;
 
 
     @Override
@@ -62,12 +58,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.nav_drawer_open, R.string.nav_drawer_close );
         drawerLayout.addDrawerListener( toggle );
         toggle.syncState();
-        navigationView = (NavigationView) findViewById( R.id.navigation_view );
+        NavigationView navigationView = (NavigationView) findViewById( R.id.navigation_view );
 
         navigationView.setNavigationItemSelectedListener( this );
-        navigationView.getMenu().findItem( R.id.nav_preferences ).setChecked( true );
+        navigationView.getMenu().findItem( R.id.nav_home ).setChecked( true );
 
-        tcClock = Objects.requireNonNull( navigationView.getMenu().findItem( R.id.tcClock ).getActionView() ).findViewById( R.id.tcClock );
+        TextClock tcClock = Objects.requireNonNull( navigationView.getMenu().findItem( R.id.tcClock ).getActionView() ).findViewById( R.id.tcClock );
         tvUser = Objects.requireNonNull( navigationView.getMenu().findItem( R.id.tvUser ).getActionView() ).findViewById( R.id.tvUser );
 
         swDark = Objects.requireNonNull( navigationView.getMenu().findItem( R.id.nav_switch ).getActionView() ).findViewById( R.id.nav_switch );
@@ -124,10 +120,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
             drawerLayout.closeDrawers();
-        } else if (id == R.id.nav_preferences) {
-            if (mCurrentFragment != FRAGMENT_PREFERENCE) {
-                replaceFragment( new Preference() );
-                mCurrentFragment = FRAGMENT_PREFERENCE;
+        } else if (id == R.id.nav_history) {
+            if (mCurrentFragment != FRAGMENT_HISTORY) {
+                replaceFragment( new UserHistory() );
+                mCurrentFragment = FRAGMENT_HISTORY;
 
             }
             drawerLayout.closeDrawers();

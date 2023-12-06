@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_preferences"
-            android:icon="@android:drawable/ic_menu_preferences"
-            android:title="Preferences" />
+            android:id="@+id/nav_history"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="@string/history" />
 
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:title="@string/home" />
 
         <item
             android:id="@+id/nav_switch"
@@ -22,7 +22,7 @@
             />
     </group>
 
-    <item android:title="@string/another_option">
+    <item android:title="@string/app_title">
         <menu>
             <item
                 android:id="@+id/nav_quit"
