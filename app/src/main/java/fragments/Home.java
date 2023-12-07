@@ -1,6 +1,8 @@
 package fragments;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -51,6 +53,7 @@ import java.util.Locale;
 
 import model.DatabaseManagement;
 import model.History;
+import model.LocaleHelper;
 import model.LocationAutoCompleteTask;
 
 public class Home extends Fragment {
@@ -76,6 +79,9 @@ public class Home extends Fragment {
 
     private History favorite;
     private String location;
+    private Context context;
+    private Resources resources;
+    private AutoCompleteTextView edLocation;
 
     public Home() {
     }
@@ -147,7 +153,7 @@ public class Home extends Fragment {
         initialize( view );
 
         // Inside your Fragment or Activity
-        AutoCompleteTextView edLocation = view.findViewById( R.id.edLocation );
+        edLocation = view.findViewById( R.id.edLocation );
 
         // Set the AutoCompleteTextView adapter using LocationAutoCompleteTask
         LocationAutoCompleteTask autoCompleteTask = new LocationAutoCompleteTask( edLocation );
@@ -228,6 +234,14 @@ public class Home extends Fragment {
             cardView2.setCardBackgroundColor( defaultCardBackgroundColor );
             cardView3.setCardBackgroundColor( defaultCardBackgroundColor );
         }
+        // load Language
+        context = container.getContext();
+        String languagePrefer = LocaleHelper.getLanguage(context).toLowerCase();
+
+        context = LocaleHelper.setLocale(context, languagePrefer);
+
+        changeHomeLanguage(languagePrefer);
+
 
         return view;
     }
@@ -259,6 +273,19 @@ public class Home extends Fragment {
                 .child( safeEmail ).child( "History" );
 //        edLocation1.setBackgroundColor( Color.WHITE );
         fetchWeatherData( location);
+    }
+    private void changeHomeLanguage(String languagePrefer) {
+        resources = context.getResources();
+
+        edLocation.setHint(resources.getString(R.string.city));
+        TextView tv1 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvWindSpeedLabel);
+        tv1.setText(resources.getString(R.string.wind_speed));
+        TextView tv2 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvCloudinessLabel);
+        tv2.setText(resources.getString(R.string.cloudiness));
+        TextView tv3 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvPressureLabel);
+        tv3.setText(resources.getString(R.string.pressure));
+        TextView tv4 = cardView2.findViewById(R.id.CL2).findViewById(R.id.tvHumidityLabel);
+        tv4.setText(resources.getString(R.string.humidity));
     }
 
     private void fetchWeatherData(String location) {

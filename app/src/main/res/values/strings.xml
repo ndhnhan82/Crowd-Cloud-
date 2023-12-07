@@ -2,9 +2,14 @@
     <string name="app_name">Welcome to Crowd Cloud</string>
     <string name="app_title"></string>
     <string name="quit">Quit</string>
+    <string name="emailEmpty">Your email and password cannot be empty. Please re-enter and try again!</string>
+    <string name="emailPass">An email will be sent to you soon!</string>
+    <string name="passwordWrong">Your email or password is not correct. Please try again or register a new user!</string>
+    <string name="notsamepass">Confirmed password and password are not correct</string>
+    <string name="somethingwrong">Something wrong! Please try again!</string>
 
     //Navigation menu
-
+    <string name="language">Language</string>
     <string name="nav_drawer_open" translatable="false">Open navigation</string>
     <string name="nav_drawer_close">Close navigation</string>
     <!-- TODO: Remove or change this placeholder text -->
