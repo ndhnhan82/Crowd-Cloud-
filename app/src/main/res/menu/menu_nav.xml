@@ -20,6 +20,11 @@
             app:showAsAction="always"
 
             />
+        <item
+            android:id="@+id/nav_language"
+            android:title="Language"
+            android:icon="@drawable/ic_language"
+            />
     </group>
 
     <item android:title="@string/app_title">
