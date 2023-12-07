@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Bienvenue Crowd Cloud</string>
+    <string name="app_title">Crowd Cloud</string>
+
+    // Login
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Se connecter</string>
+    <string name="email_address">Adresse e-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="forget_password">Mot de passe oublié</string>
+    <string name="signup">Enregistrer</string>
+
+    // Register
+    <string name="location">Location</string>
+    <string name="confirm_password">Confirmez le mot de passe</string>
+    <string name="policy">En vous connectant, vous acceptez \nnotre politique de confidentialité</string>
+    <string name="empty" translatable="false" />
+    <string name="emailEmpty">Votre email et votre mot de passe ne peuvent pas être vides. Veuillez entrer à nouveau et réessayer !</string>
+    <string name="emailPass">Un email vous sera envoyé bientot!</string>
+    <string name="passwordWrong">Votre email ou votre mot de passe n\'est pas correct. Veuillez réessayer ou enregistrer un nouvel utilisateur !</string>
+    <string name="notsamepass">Le mot de passe confirmé et le mot de passe ne sont pas corrects</string>
+    <string name="somethingwrong">Il y a quelque chose qui ne va pas! Veuillez réessayer!</string>
+
+    // Navigation menu
+    <string name="latitude_longitude">Latitude - Longitude</string>
+    <string name="history">Histoire</string>
+    <string name="nav_drawer_open" translatable="false">Open navigation</string>
+    <string name="nav_drawer_close">Close navigation</string>
+    <string name="home">Maison</string>
+    <string name="light_dark">Lumière/Nuit</string>
+    <string name="language">Langue</string>
+    <string name="another_option">Autres options</string>
+    <string name="quit">Sorti</string>
+    <string name="signout">Se déconnecter</string>
+
+    // Home
+    <string name="description_results">Description Results</string>
+    <string name="city">Ville</string>
+    <string name="temp_results">Temp Results</string>
+    <string name="city_results">City Results</string>
+    <string name="wind_speed">Vent</string>
+    <string name="icon_weather">Icon Weather</string>
+    <string name="wind_speed_results">Wind Speed Results</string>
+    <string name="cloudiness">Nuage</string>
+    <string name="cloudiness_results">Cloudiness Results</string>
+    <string name="_25_c">25°C</string>
+    <string name="_28_c">28°C</string>
+    <string name="_26_c">26°C</string>
+    <string name="pressure_results">Pressure Results</string>
+    <string name="humidity_results">Humidity Results</string>
+    <string name="pressure">Pression</string>
+    <string name="humidity">Humidité</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="thursday">Juedi</string>
+    <string name="friday">Vedredi</string>
+    <string name="welcome_to_crowdcloud">Bienvenue Crowd Cloud</string>
+    <string name="montreal_10_c">Montreal -10°C</string>
+</resources>

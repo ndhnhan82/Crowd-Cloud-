@@ -3,8 +3,10 @@ package fragments;
 //import static fragments.Login.loggedInUser;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.LocaleHelper;
 import model.User;
 
 public class Register extends Fragment implements View.OnClickListener {
@@ -44,13 +47,17 @@ public class Register extends Fragment implements View.OnClickListener {
     AlertDialog.Builder builder;
     private ProgressDialog progressDialog;
     private DatabaseReference usersDatabase;
+    private String languagePrefer;
+    private Context context;
+    private Resources resources;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate( R.layout.fragment_register, container, false );
-
+        LoginActivity activity = (LoginActivity) getActivity();
+        languagePrefer = activity.getLanguage();
         initialize();
         return mRootView;
 
@@ -63,6 +70,12 @@ public class Register extends Fragment implements View.OnClickListener {
         tiePassword = (TextInputEditText) mRootView.findViewById( R.id.tiePassword );
         tiePassword2 = (TextInputEditText) mRootView.findViewById( R.id.tiePassword2 );
         btnRegister = (Button) mRootView.findViewById( R.id.btnRegister );
+        context = LocaleHelper.setLocale(mRootView.getContext(), languagePrefer);
+        resources = context.getResources();
+        //tieEmailAddress.setHint(resources.getString(R.string.email_address));
+        //tiePassword.setHint(resources.getString(R.string.password));
+        //tiePassword2.setHint(resources.getString(R.string.confirm_password));
+        btnRegister.setText(resources.getString(R.string.signup));
         btnRegister.setOnClickListener( this );
         usersDatabase = FirebaseDatabase.getInstance().getReference( "Users" );
     }
@@ -73,8 +86,12 @@ public class Register extends Fragment implements View.OnClickListener {
         String strEmail = tieEmailAddress.getText().toString();
         String strPassword = tiePassword.getText().toString();
         String strPassword2 = tiePassword2.getText().toString();
+        if (strEmail.isEmpty() || strPassword.isEmpty()) {
+            showAlert(resources.getString(R.string.emailEmpty));
+            return;
+        }
         if (!strPassword.equals(strPassword2))
-            showAlert( "Confirm password and password are not the same!" );
+            showAlert(resources.getString(R.string.notsamepass));
         else {
             progressDialog.show();
             mAuth.createUserWithEmailAndPassword( strEmail, strPassword)
@@ -85,10 +102,11 @@ public class Register extends Fragment implements View.OnClickListener {
                             if (task.isSuccessful()) {
                                 addUpdateUser( new User(strEmail,"En") );
                                 Intent intent = new Intent( getActivity(), MainActivity.class );
+                                intent.putExtra("languagePrefer",languagePrefer);
                                 startActivity( intent );
                                 getActivity().finishAffinity();
                             } else {
-                                showAlert( "There is something wrong! Please try again!" );
+                                showAlert(resources.getString(R.string.somethingwrong));
                             }
                         }
                     } );
