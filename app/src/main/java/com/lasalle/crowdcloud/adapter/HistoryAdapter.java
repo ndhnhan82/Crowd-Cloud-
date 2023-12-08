@@ -94,15 +94,15 @@ public class HistoryAdapter extends BaseAdapter {
                                 DatabaseReference historyRef = FirebaseDatabase.getInstance()
                                         .getReference( "Users" )
                                         .child( safeEmail ).child( "History" );
-
+                                histories.remove( position );
+                                notifyDataSetChanged();
                                 historyRef.child( tvLocation.getText().toString() ).removeValue();
                             }
                         }
                     } );
                     alertDialog.setNegativeButton( "No", null);
                     alertDialog.create().show();
-                    histories.remove( position );
-                    notifyDataSetChanged();
+                    
                 }
             }
         } );
