@@ -52,13 +52,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import model.DatabaseManagement;
+import model.Favorite;
 import model.History;
 import model.LocaleHelper;
 import model.LocationAutoCompleteTask;
 
 public class Home extends Fragment {
 
-    private Button btnFinish;
+    private Button btnFinish, btnFavorite;
     private ScrollView svResults;
     private TextView tvCityResult, tvTemperatureResult, tvHumidityResult, tvDescriptionResult, tvWindSpeedResult, tvCloudinessResult, tvPressureResult;
     protected TextView tvTempDay2_1, tvTempDay3_1, tvTempDay4_1, tvTempDay5_1;
@@ -75,7 +76,7 @@ public class Home extends Fragment {
     private static final String geoLocateUrl = "https://api.openweathermap.org/geo/1.0/direct";
 
     //Formatting
-    DecimalFormat df = new DecimalFormat( "#.##" );
+    DecimalFormat df = new DecimalFormat("#.##");
 
     private History favorite;
     private String location;
@@ -83,12 +84,18 @@ public class Home extends Fragment {
     private Resources resources;
     private AutoCompleteTextView edLocation;
 
+    public enum isEnumFavorite {
+        TRUE, FALSE, INDETERMINATE
+    }
+
+    isEnumFavorite isFavorite = isEnumFavorite.INDETERMINATE;
+
     public Home() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
 //        getFavorite( new FavoriteCallBack() {
 //            @Override
 //            public void onFavoriteUpdated(History history) {
@@ -107,39 +114,40 @@ public class Home extends Fragment {
         location = "MONTREAL";
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            location = bundle.getString( "FromUserHistoryList", "Montreal" );
+            location = bundle.getString("FromUserHistoryList", "Montreal");
         }
 
     }
 
     private void getFavorite(final FavoriteCallBack favoriteCallBack) {
         String safeEmail = DatabaseManagement.getSafeEmailOfCurrentUser();
-        DatabaseReference favRef = FirebaseDatabase.getInstance().getReference( "Users" )
-                .child( safeEmail ).child( "Favorite" );
-        favRef.addListenerForSingleValueEvent( new ValueEventListener() {
+        DatabaseReference favRef = FirebaseDatabase.getInstance().getReference("Users")
+                .child(safeEmail).child("Favorite");
+        favRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d( "TESTING", snapshot.getValue().toString() );
-                favorite = snapshot.getValue( History.class );
+                Log.d("TESTING", snapshot.getValue().toString());
+                favorite = snapshot.getValue(History.class);
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        } );
-        favRef.addListenerForSingleValueEvent( new ValueEventListener() {
+        });
+        favRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                favoriteCallBack.onFavoriteUpdated( favorite );
+                favoriteCallBack.onFavoriteUpdated(favorite);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle error if needed
-                favoriteCallBack.onFailure( error.toException() );
+                favoriteCallBack.onFailure(error.toException());
             }
-        } );
+        });
 
     }
 
@@ -147,29 +155,29 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate( R.layout.fragment_home, container, false );
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Fragmented Assets
-        initialize( view );
+        initialize(view);
 
         // Inside your Fragment or Activity
-        edLocation = view.findViewById( R.id.edLocation );
+        edLocation = view.findViewById(R.id.edLocation);
 
         // Set the AutoCompleteTextView adapter using LocationAutoCompleteTask
-        LocationAutoCompleteTask autoCompleteTask = new LocationAutoCompleteTask( edLocation );
-        edLocation.setAdapter( autoCompleteTask );
+        LocationAutoCompleteTask autoCompleteTask = new LocationAutoCompleteTask(edLocation);
+        edLocation.setAdapter(autoCompleteTask);
 
-        edLocation.setOnEditorActionListener( (textView, actionId, keyEvent) -> {
+        edLocation.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_NULL) {
                 // Trigger the same action as if the search button was clicked
                 btnFinish.performClick();
                 return true;
             }
             return false;
-        } );
+        });
 
         // Set up the text change listener for AutoCompleteTextView
-        edLocation.addTextChangedListener( new TextWatcher() {
+        edLocation.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int before, int count) {
             }
@@ -177,62 +185,74 @@ public class Home extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 // Execute the AsyncTask to fetch and filter locations
-                new LocationAutoCompleteTask( edLocation );
+                new LocationAutoCompleteTask(edLocation);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
             }
-        } );
+        });
 
         // Set onClickListener for the Finish button
-        btnFinish.setOnClickListener( v -> {
+        btnFinish.setOnClickListener(v -> {
             // Get the entered location from the AutoCompleteTextView
             String location = edLocation.getText().toString().toLowerCase().trim();
 
             // Check if the location is empty
             if (location.isEmpty()) {
                 // Display a toast message
-                Toast.makeText( getContext(), "Please insert a city", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getContext(), "Please insert a city", Toast.LENGTH_SHORT).show();
             } else {
                 // Apply button pressed animation
-                Animation animation = AnimationUtils.loadAnimation( getContext(), R.anim.button_scale );
-                v.startAnimation( animation );
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.button_scale);
+                v.startAnimation(animation);
 
                 // Make API request using Volley
-                fetchWeatherData( location );
+                fetchWeatherData(location);
 
                 // Animate the Scroll View
-                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat( svResults, "alpha", 0f, 1f );
-                alphaAnimator.setDuration( 2000 );
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(svResults, "alpha", 0f, 1f);
+                alphaAnimator.setDuration(2000);
                 alphaAnimator.start();
 
-                ObjectAnimator alphaAnimatorImage = ObjectAnimator.ofFloat( ivWeather, "alpha", 0f, 1f );
-                alphaAnimatorImage.setDuration( 1000 );
+                ObjectAnimator alphaAnimatorImage = ObjectAnimator.ofFloat(ivWeather, "alpha", 0f, 1f);
+                alphaAnimatorImage.setDuration(1000);
                 alphaAnimator.start();
 
+                isEnumFavorite isFavorite = isEnumFavorite.INDETERMINATE;
+                checkFavorite();
                 // Show the Scroll View
-                svResults.setVisibility( View.VISIBLE );
+                svResults.setVisibility(View.VISIBLE);
             }
-        } );
+        });
 
-        int defaultBackgroundColor = Color.parseColor( "#408EE1" );
-        int defaultCardBackgroundColor = Color.parseColor( "#FFFFFF" );
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle button click
+
+               handleFavoriteButtonClick();
+
+            }
+        });
+
+        int defaultBackgroundColor = Color.parseColor("#408EE1");
+        int defaultCardBackgroundColor = Color.parseColor("#FFFFFF");
         // Check if night mode is active
         int nightMode = AppCompatDelegate.getDefaultNightMode();
         if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
             // Night mode is active, set the background color to black for FrameLayout and CardViews
-            frameLayoutHome.setBackgroundColor( Color.BLACK );
-            cardView1.setCardBackgroundColor( Color.GRAY );
-            cardView2.setCardBackgroundColor( Color.GRAY );
-            cardView3.setCardBackgroundColor( Color.GRAY );
+            frameLayoutHome.setBackgroundColor(Color.BLACK);
+            cardView1.setCardBackgroundColor(Color.GRAY);
+            cardView2.setCardBackgroundColor(Color.GRAY);
+            cardView3.setCardBackgroundColor(Color.GRAY);
 
         } else {
             // Night mode is not active, set the background color to your default color
-            frameLayoutHome.setBackgroundColor( defaultBackgroundColor );
-            cardView1.setCardBackgroundColor( defaultCardBackgroundColor );
-            cardView2.setCardBackgroundColor( defaultCardBackgroundColor );
-            cardView3.setCardBackgroundColor( defaultCardBackgroundColor );
+            frameLayoutHome.setBackgroundColor(defaultBackgroundColor);
+            cardView1.setCardBackgroundColor(defaultCardBackgroundColor);
+            cardView2.setCardBackgroundColor(defaultCardBackgroundColor);
+            cardView3.setCardBackgroundColor(defaultCardBackgroundColor);
         }
         // load Language
         context = container.getContext();
@@ -247,33 +267,35 @@ public class Home extends Fragment {
     }
 
     private void initialize(View view) {
-        AutoCompleteTextView edLocation1 = view.findViewById( R.id.edLocation );
-        btnFinish = view.findViewById( R.id.btnFinish );
-        svResults = view.findViewById( R.id.svResults );
-        tvCityResult = view.findViewById( R.id.tvCityResult );
-        tvTemperatureResult = view.findViewById( R.id.tvTemperatureResult );
-        tvHumidityResult = view.findViewById( R.id.tvHumidityResult );
-        tvDescriptionResult = view.findViewById( R.id.tvDescriptionResult );
-        tvWindSpeedResult = view.findViewById( R.id.tvWindSpeedResult );
-        tvCloudinessResult = view.findViewById( R.id.tvCloudinessResult );
-        tvPressureResult = view.findViewById( R.id.tvPressureResult );
-        ivWeather = view.findViewById( R.id.ivWeather );
-        CardView cardViewSearch = view.findViewById( R.id.CardViewSearch );
-        cardView1 = view.findViewById( R.id.CardView1 );
-        cardView2 = view.findViewById( R.id.CardView2 );
-        cardView3 = view.findViewById( R.id.CardView3 );
-        frameLayoutHome = view.findViewById( R.id.frameLayoutHome );
-        tvTempDay2_1 = view.findViewById( R.id.tvTempDay2_1 );
-        tvTempDay3_1 = view.findViewById( R.id.tvTempDay3_1 );
-        tvTempDay4_1 = view.findViewById( R.id.tvTempDay4_1 );
-        tvTempDay5_1 = view.findViewById( R.id.tvTempDay5_1 );
+        AutoCompleteTextView edLocation1 = view.findViewById(R.id.edLocation);
+        btnFinish = view.findViewById(R.id.btnFinish);
+        btnFavorite = view.findViewById(R.id.btnFavorite);
+        svResults = view.findViewById(R.id.svResults);
+        tvCityResult = view.findViewById(R.id.tvCityResult);
+        tvTemperatureResult = view.findViewById(R.id.tvTemperatureResult);
+        tvHumidityResult = view.findViewById(R.id.tvHumidityResult);
+        tvDescriptionResult = view.findViewById(R.id.tvDescriptionResult);
+        tvWindSpeedResult = view.findViewById(R.id.tvWindSpeedResult);
+        tvCloudinessResult = view.findViewById(R.id.tvCloudinessResult);
+        tvPressureResult = view.findViewById(R.id.tvPressureResult);
+        ivWeather = view.findViewById(R.id.ivWeather);
+        CardView cardViewSearch = view.findViewById(R.id.CardViewSearch);
+        cardView1 = view.findViewById(R.id.CardView1);
+        cardView2 = view.findViewById(R.id.CardView2);
+        cardView3 = view.findViewById(R.id.CardView3);
+        frameLayoutHome = view.findViewById(R.id.frameLayoutHome);
+        tvTempDay2_1 = view.findViewById(R.id.tvTempDay2_1);
+        tvTempDay3_1 = view.findViewById(R.id.tvTempDay3_1);
+        tvTempDay4_1 = view.findViewById(R.id.tvTempDay4_1);
+        tvTempDay5_1 = view.findViewById(R.id.tvTempDay5_1);
 
         String safeEmail = DatabaseManagement.getSafeEmailOfCurrentUser();
-        historyRef = FirebaseDatabase.getInstance().getReference( "Users" )
-                .child( safeEmail ).child( "History" );
+        historyRef = FirebaseDatabase.getInstance().getReference("Users")
+                .child(safeEmail).child("History");
 //        edLocation1.setBackgroundColor( Color.WHITE );
-        fetchWeatherData( location);
+        fetchWeatherData(location);
     }
+
     private void changeHomeLanguage(String languagePrefer) {
         resources = context.getResources();
 
@@ -294,65 +316,65 @@ public class Home extends Fragment {
         String apiGeoUrl = geoLocateUrl + "?q=" + location + "&limit=5&appid=" + api;
 
         // Create a StringRequest to make the API request
-        StringRequest stringRequest = new StringRequest( Request.Method.GET, apiUrl,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, apiUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Handle the JSON response
-                        handleWeatherResponse( response );
+                        handleWeatherResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle errors
-                        Log.e( "Volley Error", error.toString() );
-                        Toast.makeText( getContext(), "Error fetching weather data", Toast.LENGTH_SHORT ).show();
+                        Log.e("Volley Error", error.toString());
+                        Toast.makeText(getContext(), "Error fetching weather data", Toast.LENGTH_SHORT).show();
                     }
-                } );
+                });
 
         // Create a StringRequest to make the geolocation API request
-        StringRequest geoLocateRequest = new StringRequest( Request.Method.GET, apiGeoUrl,
+        StringRequest geoLocateRequest = new StringRequest(Request.Method.GET, apiGeoUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Handle the JSON response from geolocation API
-                        handleGeolocationResponse( response, location );
+                        handleGeolocationResponse(response, location);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle errors
-                        Log.e( "Volley Error", error.toString() );
-                        Toast.makeText( getContext(), "Error fetching geolocation data", Toast.LENGTH_SHORT ).show();
+                        Log.e("Volley Error", error.toString());
+                        Toast.makeText(getContext(), "Error fetching geolocation data", Toast.LENGTH_SHORT).show();
                     }
-                } );
+                });
 
         // Add the requests to the RequestQueue
-        RequestQueue requestQueue = Volley.newRequestQueue( requireContext() );
-        requestQueue.add( stringRequest );
-        requestQueue.add( geoLocateRequest );
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        requestQueue.add(stringRequest);
+        requestQueue.add(geoLocateRequest);
     }
 
     private void handleGeolocationResponse(String response, String location) {
         try {
             // Parsing the JSON response for geolocation
-            JSONArray jsonArray = new JSONArray( response );
+            JSONArray jsonArray = new JSONArray(response);
 
             if (jsonArray.length() > 0) {
-                JSONObject locationObject = jsonArray.getJSONObject( 0 );
+                JSONObject locationObject = jsonArray.getJSONObject(0);
 
                 // Extract latitude and longitude
-                double latitude = locationObject.getDouble( "lat" );
-                double longitude = locationObject.getDouble( "lon" );
+                double latitude = locationObject.getDouble("lat");
+                double longitude = locationObject.getDouble("lon");
 
                 // Now, use the latitude and longitude to make the forecast API call
-                fetchForecastData( location, latitude, longitude );
-                saveLocationToHistory( location.toUpperCase(), latitude, longitude );
+                fetchForecastData(location, latitude, longitude);
+                saveLocationToHistory(location.toUpperCase(), latitude, longitude);
 
             } else {
-                Toast.makeText( getContext(), "Geolocation data not found", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getContext(), "Geolocation data not found", Toast.LENGTH_SHORT).show();
             }
 
         } catch (JSONException e) {
@@ -361,8 +383,8 @@ public class Home extends Fragment {
     }
 
     private void saveLocationToHistory(String location, double latitude, double longitude) {
-        History history = new History( location, latitude, longitude );
-        historyRef.child( location ).setValue( history );
+        History history = new History(location, latitude, longitude);
+        historyRef.child(location).setValue(history);
     }
 
     private void fetchForecastData(String location, double latitude, double longitude) {
@@ -370,52 +392,52 @@ public class Home extends Fragment {
         String forecastUrl = "https://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitude + "&lon=" + longitude + "&appid=" + api;
 
         // Create a StringRequest to make the forecast API request
-        StringRequest forecastRequest = new StringRequest( Request.Method.GET, forecastUrl,
+        StringRequest forecastRequest = new StringRequest(Request.Method.GET, forecastUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Handle the JSON response from forecast API
-                        handleForecastResponse( response, location );
+                        handleForecastResponse(response, location);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle errors
-                        Log.e( "Volley Error", error.toString() );
-                        Toast.makeText( getContext(), "Error fetching forecast data", Toast.LENGTH_SHORT ).show();
+                        Log.e("Volley Error", error.toString());
+                        Toast.makeText(getContext(), "Error fetching forecast data", Toast.LENGTH_SHORT).show();
                     }
-                } );
+                });
 
         // Add the forecast request to the RequestQueue
-        Volley.newRequestQueue( requireContext() ).add( forecastRequest );
+        Volley.newRequestQueue(requireContext()).add(forecastRequest);
     }
 
     private void handleForecastResponse(String response, String location) {
         try {
             // Parsing the JSON response for forecast
-            JSONObject forecastObject = new JSONObject( response );
+            JSONObject forecastObject = new JSONObject(response);
 
             // Extracting the list of forecasts
-            JSONArray forecastList = forecastObject.getJSONArray( "list" );
+            JSONArray forecastList = forecastObject.getJSONArray("list");
 
             // Update UI components for each forecast item (assuming 5 days for this example)
             for (int i = 0; i < 5; i++) {
                 // Extract forecast for a specific day
-                JSONObject dayForecast = forecastList.getJSONObject( i );
+                JSONObject dayForecast = forecastList.getJSONObject(i);
 
                 // Extract the date
-                long timestamp = dayForecast.getLong( "dt" );
-                String dayOfWeek = getDayOfWeek( timestamp );
+                long timestamp = dayForecast.getLong("dt");
+                String dayOfWeek = getDayOfWeek(timestamp);
 
                 // Extract other relevant information for the day (e.g., temperature, weather icon)
-                double temperature = dayForecast.getJSONObject( "temp" ).getDouble( "day" );
-                String weatherIcon = dayForecast.getJSONArray( "weather" ).getJSONObject( 0 ).getString( "icon" );
+                double temperature = dayForecast.getJSONObject("temp").getDouble("day");
+                String weatherIcon = dayForecast.getJSONArray("weather").getJSONObject(0).getString("icon");
 
-                double tempCelsius = Math.round( temperature - 273.15 );
+                double tempCelsius = Math.round(temperature - 273.15);
 
                 // Update UI components based on the extracted information
-                updateDayUI( dayOfWeek, tempCelsius, weatherIcon, i );
+                updateDayUI(dayOfWeek, tempCelsius, weatherIcon, i);
             }
 
         } catch (JSONException e) {
@@ -425,37 +447,37 @@ public class Home extends Fragment {
 
     private String getDayOfWeek(long timestamp) {
         // Convert timestamp to day of the week
-        Date date = new Date( timestamp * 1000 );
-        SimpleDateFormat sdf = new SimpleDateFormat( "EEEE", Locale.getDefault() );
-        return sdf.format( date );
+        Date date = new Date(timestamp * 1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
+        return sdf.format(date);
     }
 
     private void updateDayUI(String dayOfWeek, double temperature, String weatherIcon, int dayIndex) {
 
-        TextView dayLabel = getView().findViewById( getDayLabelId( dayIndex ) );
-        ImageView weatherImageView = getView().findViewById( getWeatherImageViewId( dayIndex ) );
-        TextView temperatureLabel = getView().findViewById( getTemperatureLabelId( dayIndex ) );
+        TextView dayLabel = getView().findViewById(getDayLabelId(dayIndex));
+        ImageView weatherImageView = getView().findViewById(getWeatherImageViewId(dayIndex));
+        TextView temperatureLabel = getView().findViewById(getTemperatureLabelId(dayIndex));
 
         // Update the views
-        dayLabel.setText( dayOfWeek );
-        temperatureLabel.setText( String.valueOf( (int) Math.round( temperature ) ) + " °C" );
+        dayLabel.setText(dayOfWeek);
+        temperatureLabel.setText(String.valueOf((int) Math.round(temperature)) + " °C");
 
         // Load weather icon using Picasso (assuming you have Picasso library added)
         String imageUrl = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
-        Picasso.get().load( imageUrl ).into( weatherImageView, new Callback() {
+        Picasso.get().load(imageUrl).into(weatherImageView, new Callback() {
             @Override
             public void onSuccess() {
                 // Icon loaded successfully
-                Picasso.get().load( imageUrl ).into( weatherImageView );
+                Picasso.get().load(imageUrl).into(weatherImageView);
             }
 
             @Override
             public void onError(Exception e) {
                 // Log or handle the error
-                Log.e( "Picasso Error", e.toString() );
+                Log.e("Picasso Error", e.toString());
                 e.printStackTrace();
             }
-        } );
+        });
 
     }
 
@@ -477,44 +499,44 @@ public class Home extends Fragment {
     private void handleWeatherResponse(String response) {
         try {
             // Parsing the JSON response
-            JSONObject jsonObject = new JSONObject( response );
+            JSONObject jsonObject = new JSONObject(response);
 
             // Extracting relevant information
-            String cityName = jsonObject.getString( "name" );
-            String countryName = jsonObject.getJSONObject( "sys" ).getString( "country" );
-            double temperature = jsonObject.getJSONObject( "main" ).getDouble( "temp" );
-            int humidity = jsonObject.getJSONObject( "main" ).getInt( "humidity" );
-            JSONArray weatherArray = jsonObject.getJSONArray( "weather" );
-            double windSpeed = jsonObject.getJSONObject( "wind" ).getDouble( "speed" );
-            int cloudiness = jsonObject.getJSONObject( "clouds" ).getInt( "all" );
-            int pressure = jsonObject.getJSONObject( "main" ).getInt( "pressure" );
+            String cityName = jsonObject.getString("name");
+            String countryName = jsonObject.getJSONObject("sys").getString("country");
+            double temperature = jsonObject.getJSONObject("main").getDouble("temp");
+            int humidity = jsonObject.getJSONObject("main").getInt("humidity");
+            JSONArray weatherArray = jsonObject.getJSONArray("weather");
+            double windSpeed = jsonObject.getJSONObject("wind").getDouble("speed");
+            int cloudiness = jsonObject.getJSONObject("clouds").getInt("all");
+            int pressure = jsonObject.getJSONObject("main").getInt("pressure");
 
 
-            double tempCelsius = Math.round( temperature - 273.15 );
+            double tempCelsius = Math.round(temperature - 273.15);
 
 
             // Updating UI with the extracted information
-            tvCityResult.setText( cityName + ", " + countryName );
-            tvTemperatureResult.setText( String.valueOf( (int) tempCelsius + " °C" ) );
-            tvHumidityResult.setText( String.valueOf( humidity ) + " %" );
-            tvWindSpeedResult.setText( String.valueOf( windSpeed ) + " kmph" );
-            tvCloudinessResult.setText( String.valueOf( cloudiness ) + " %" );
-            tvPressureResult.setText( String.valueOf( pressure ) + " mb" );
+            tvCityResult.setText(cityName + ", " + countryName);
+            tvTemperatureResult.setText(String.valueOf((int) tempCelsius + " °C"));
+            tvHumidityResult.setText(String.valueOf(humidity) + " %");
+            tvWindSpeedResult.setText(String.valueOf(windSpeed) + " kmph");
+            tvCloudinessResult.setText(String.valueOf(cloudiness) + " %");
+            tvPressureResult.setText(String.valueOf(pressure) + " mb");
 
             try {
                 //extracting the description
                 if (weatherArray.length() > 0) {
-                    JSONObject weatherObject = weatherArray.getJSONObject( 0 );
-                    String description = weatherObject.getString( "description" );
-                    String main = weatherObject.getString( "main" );
+                    JSONObject weatherObject = weatherArray.getJSONObject(0);
+                    String description = weatherObject.getString("description");
+                    String main = weatherObject.getString("main");
 
-                    tvDescriptionResult.setText( main + ", " + description );
+                    tvDescriptionResult.setText(main + ", " + description);
 
-                    if (weatherObject.has( "icon" )) {
-                        String iconCode = weatherObject.getString( "icon" );
+                    if (weatherObject.has("icon")) {
+                        String iconCode = weatherObject.getString("icon");
                         String iconUrl = imageUrl + iconCode + "@2x.png";
 
-                        Picasso.get().load( iconUrl ).resize( 350, 350 ).centerInside().into( ivWeather );
+                        Picasso.get().load(iconUrl).resize(350, 350).centerInside().into(ivWeather);
 
                     }
                 }
@@ -533,4 +555,99 @@ public class Home extends Fragment {
 
         void onFailure(Exception e);
     }
+
+
+    private void checkFavorite() {
+        String currentUser = DatabaseManagement.getSafeEmailOfCurrentUser();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser).child("favorite");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String cityResult = tvCityResult.getText().toString();
+                    boolean foundMatch = false; // Flag to track if a match is found
+
+                    for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
+                        String city = citySnapshot.getKey();
+                        if (city != null && city.equals(cityResult)) {
+                            foundMatch = true; // Set the flag to true if a match is found
+                            break; // No need to continue searching once a match is found.
+                        }
+                    }
+                    // Set isFavorite based on whether a match was found
+                    isFavorite = foundMatch ? isEnumFavorite.FALSE : isEnumFavorite.TRUE;
+
+                    // Set the background resource accordingly
+                    btnFavorite.setBackgroundResource(foundMatch ? R.drawable.favorite_unselected : R.drawable.favorite_selected);
+                }
+                /*
+                if (dataSnapshot.exists()) {
+                    String cityResult = tvCityResult.getText().toString();
+                    boolean foundMatch= false;
+
+                    for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
+                        String city = citySnapshot.getKey();
+                        if (city != null && city.equals(cityResult)) {
+                            isFavorite = isEnumFavorite.FALSE;
+                            btnFavorite.setBackgroundResource(R.drawable.favorite_unselected);
+                            foundMatch = true;
+                            break; // No need to continue searching once a match is found.
+                        }
+                        if (foundMatch) {
+                            isFavorite = isEnumFavorite.FALSE;
+                            btnFavorite.setBackgroundResource(R.drawable.favorite_unselected);
+                        } else {
+                            isFavorite = isEnumFavorite.TRUE;
+                            btnFavorite.setBackgroundResource(R.drawable.favorite_selected);
+                        }
+                    }
+                }
+                */
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+    private void handleFavoriteButtonClick() {
+        if (isFavorite == isEnumFavorite.TRUE) {
+            addToFavorites(tvCityResult.getText().toString());
+        } else {
+            removeFromFavorites(tvCityResult.getText().toString());
+        }
+    }
+
+    private void addToFavorites(String cityName) {
+
+        btnFavorite.setBackgroundResource(R.drawable.favorite_selected);
+        isFavorite = isEnumFavorite.TRUE;
+
+
+        String currentUser = DatabaseManagement.getSafeEmailOfCurrentUser();
+        DatabaseReference favoriteRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser).child("Favorite");
+
+        favoriteRef.child(cityName).setValue("");
+
+    }
+
+    private void removeFromFavorites(String cityName) {
+
+        btnFavorite.setBackgroundResource(R.drawable.favorite_unselected);
+        isFavorite = isEnumFavorite.FALSE;
+
+        String currentUser = DatabaseManagement.getSafeEmailOfCurrentUser();
+        DatabaseReference favoriteRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser).child("Favorite");
+        Favorite favorite = new Favorite(cityName);
+        favoriteRef.child(cityName).setValue(null);
+
+    }
+
+
+
+
+
+
+
 }
