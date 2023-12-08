@@ -93,6 +93,7 @@ public class DatabaseManagement {
                 .replace( "@","-" )
                 .replace( ".","-" );
     }
+
     public static void getUserFavoriteList(String safeEmail, final FavoriteListCallback callback) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference( "Users" )
                 .child( safeEmail ).child( "favorite" );
@@ -143,7 +144,7 @@ public class DatabaseManagement {
     }
     public interface FavoriteListCallback {
         void onFavoriteListUpdated(ArrayList<Favorite> userList);
-        
+
 
         void onFailure(Exception e);
     }

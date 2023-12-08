@@ -32,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="50dp"
-        android:backgroundTint="@android:color/holo_orange_light"
         app:cardElevation="@dimen/cardview_default_elevation"
         >
 
@@ -106,7 +105,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:backgroundTint="@color/cardView"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp"
                     >
@@ -139,6 +137,7 @@
                             app:layout_constraintRight_toRightOf="parent"
                             android:background="@drawable/favorite_unselected"
                             />
+
                         <ImageView
                             android:id="@+id/ivWeather"
                             android:layout_width="wrap_content"
@@ -190,7 +189,6 @@
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp"
-                    android:backgroundTint="@color/cardView"
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -210,7 +208,7 @@
                             android:textStyle="bold"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="15dp"
 
                             />
 
@@ -222,6 +220,7 @@
                             android:textColor="@color/weatherCondition"
                             app:layout_constraintLeft_toRightOf="@id/tvWindSpeedLabel"
                             app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginLeft="5dp"
                             />
 
                         <TextView
@@ -303,7 +302,6 @@
                     app:layout_constraintTop_toBottomOf="@id/CardView2"
                     android:layout_marginTop="20dp"
                     app:cardCornerRadius="20dp"
-                    android:backgroundTint="@color/cardView"
                     app:cardElevation="@dimen/cardview_default_elevation"
                     >
 
@@ -324,7 +322,7 @@
                             android:textStyle="bold"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="15dp"
 
                             />
 
