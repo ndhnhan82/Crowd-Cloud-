@@ -70,7 +70,7 @@ public class FavoriteAdapter extends BaseAdapter {
         imDelete = oneItem.findViewById( R.id.btnDelete );
 
         favorite = (Favorite) getItem( position );
-        tvLocation.setText( favorite.getKey() );
+        //tvLocation.setText( favorite.getKey() );
         View finalOneItem = oneItem;
         imDelete.setOnClickListener( new View.OnClickListener() {
 

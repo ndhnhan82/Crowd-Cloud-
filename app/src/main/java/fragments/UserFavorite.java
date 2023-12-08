@@ -35,12 +35,13 @@ public class UserFavorite extends Fragment {
 
         fragment = new Home();
         Bundle args = new Bundle();
-        args.putString( ARG_PARAM, selectedFavorite.getKey() );
-        fragment.setArguments( args );
+        args.putString(ARG_PARAM, selectedFavorite.getLocation());
+        fragment.setArguments(args);
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace( R.id.content_frame, fragment ).addToBackStack( null ).commit();
+        fragmentTransaction.replace(R.id.content_frame, fragment).addToBackStack(null).commit();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -49,29 +50,33 @@ public class UserFavorite extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate( R.layout.fragment_favorite, container, false );
+        view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        lvFavorite = (ListView) view.findViewById( R.id.lvFavorite );
+        lvFavorite = view.findViewById(R.id.lvFavorite);
         String safeEmail = DatabaseManagement.getSafeEmailOfCurrentUser();
+
         DatabaseManagement.getUserFavoriteList(safeEmail, new DatabaseManagement.FavoriteListCallback() {
             @Override
             public void onFavoriteListUpdated(ArrayList<Favorite> userList) {
-                favoriteAdapter = new FavoriteAdapter(view.getContext(), userList , FavoriteAdapter.USER_FAVORITE);
+                favoriteAdapter = new FavoriteAdapter(view.getContext(), userList, FavoriteAdapter.USER_FAVORITE);
                 lvFavorite.setAdapter(favoriteAdapter);
-                lvFavorite.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+
+                lvFavorite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Favorite selectedUser = (Favorite) lvFavorite.getItemAtPosition( position );
-                        launchHome( selectedUser );
+                        Favorite selectedUser = (Favorite) lvFavorite.getItemAtPosition(position);
+                        launchHome(selectedUser);
                     }
-                } );
+                });
             }
+
             @Override
             public void onFailure(Exception e) {
-                Log.d( "ERROR", e.getMessage() );
+                Log.d("ERROR", e.getMessage());
             }
-        } );
+        });
 
         return view;
     }
+
 }
