@@ -35,7 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 import fragments.Home;
+import fragments.UserFavorite;
 import fragments.UserHistory;
+import model.Favorite;
 import model.LocaleHelper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_HISTORY = 1;
     private int mCurrentFragment = FRAGMENT_HOME;
+    private final int FRAGMENT_FAVORITE = 2;
     private NavigationView navigationView;
     private Switch swDark;
     private TextView tvUser;
@@ -179,10 +182,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (mCurrentFragment != FRAGMENT_HISTORY) {
                 replaceFragment( new UserHistory() );
                 mCurrentFragment = FRAGMENT_HISTORY;
-
             }
             drawerLayout.closeDrawers();
-        } else if (id == R.id.nav_SignOut) {
+        }else if (id==R.id.nav_favorite) {
+            if (mCurrentFragment != FRAGMENT_FAVORITE) {
+                replaceFragment( new UserFavorite() );
+                mCurrentFragment = FRAGMENT_FAVORITE;
+            }
+            drawerLayout.closeDrawers();
+        }
+        else if (id == R.id.nav_SignOut) {
             FirebaseAuth.getInstance().signOut();
             this.finish();
             Intent intent = new Intent( this, LoginActivity.class );
@@ -192,8 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent.addCategory(Intent.CATEGORY_HOME);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_language) {
+        }  else if (id == R.id.nav_language) {
             final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
             dialogBuilder.setTitle("Select a Language")
                     .setSingleChoiceItems(languageList, selectedLanguage, (dialog, i) -> {
@@ -253,6 +261,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Darkmode
         navigationView.getMenu().findItem(R.id.nav_switch)
                 .setTitle(resources.getString(R.string.light_dark));
+        //Favorite
+        navigationView.getMenu().findItem(R.id.nav_favorite).setTitle(resources.getString(R.string.favorite));
         // Language
         navigationView.getMenu().findItem(R.id.nav_language)
                 .setTitle(resources.getString(R.string.language));

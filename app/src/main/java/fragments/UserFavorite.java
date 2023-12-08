@@ -1,6 +1,10 @@
 package fragments;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,38 +12,30 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.lasalle.crowdcloud.R;
-import com.lasalle.crowdcloud.adapter.HistoryAdapter;
+import com.lasalle.crowdcloud.adapter.FavoriteAdapter;
 
 import java.util.ArrayList;
 
 import model.DatabaseManagement;
 import model.Favorite;
-import model.History;
-import model.User;
 
-public class UserHistory extends Fragment {
+public class UserFavorite extends Fragment {
 
-    private ListView lvHistory;
+    private ListView lvFavorite;
     private View view;
-
     private Fragment fragment;
+    private FavoriteAdapter favoriteAdapter;
+    private static final String ARG_PARAM = "FromUserFavoriteList";
 
-    private HistoryAdapter historyAdapter;
-    private static final String ARG_PARAM = "FromUserHistoryList";
-
-    public UserHistory() {
+    public UserFavorite() {
     }
 
-    private void launchHome(History selectedHistory) {
+    private void launchHome(Favorite selectedFavorite) {
 
         fragment = new Home();
         Bundle args = new Bundle();
-        args.putString( ARG_PARAM, selectedHistory.getLocation() );
+        args.putString( ARG_PARAM, selectedFavorite.getKey() );
         fragment.setArguments( args );
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -48,48 +44,34 @@ public class UserHistory extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate( R.layout.fragment_user_history, container, false );
+        view = inflater.inflate( R.layout.fragment_favorite, container, false );
 
-        lvHistory = (ListView) view.findViewById( R.id.lvCourse );
+        lvFavorite = (ListView) view.findViewById( R.id.lvFavorite );
         String safeEmail = DatabaseManagement.getSafeEmailOfCurrentUser();
-        DatabaseManagement.getUserHistoryList(safeEmail, new DatabaseManagement.HistoryListCallback() {
+        DatabaseManagement.getUserFavoriteList(safeEmail, new DatabaseManagement.FavoriteListCallback() {
             @Override
-            public void onHistoryListUpdated(ArrayList<History> userList) {
-                historyAdapter = new HistoryAdapter( view.getContext(), userList ,HistoryAdapter.USER_HISTORY);
-                lvHistory.setAdapter( historyAdapter );
-                lvHistory.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            public void onFavoriteListUpdated(ArrayList<Favorite> userList) {
+                favoriteAdapter = new FavoriteAdapter(view.getContext(), userList , FavoriteAdapter.USER_FAVORITE);
+                lvFavorite.setAdapter(favoriteAdapter);
+                lvFavorite.setOnItemClickListener( new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        History selectedUser = (History) lvHistory.getItemAtPosition( position );
+                        Favorite selectedUser = (Favorite) lvFavorite.getItemAtPosition( position );
                         launchHome( selectedUser );
                     }
                 } );
             }
-
             @Override
             public void onFailure(Exception e) {
                 Log.d( "ERROR", e.getMessage() );
-            }
-
-            @Override
-            public void onFavoriteListUpdated(ArrayList<Favorite> arrListUserFavorite) {
-
             }
         } );
 
         return view;
     }
-
-
-
-
-
-
-
 }
