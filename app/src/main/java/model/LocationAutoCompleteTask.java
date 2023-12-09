@@ -21,7 +21,7 @@ import java.util.List;
 
 public class LocationAutoCompleteTask extends ArrayAdapter<String> implements Filterable {
 
-    private static final String GEOLOCATE_API_KEY = "bd5e378503939ddaee76f12ad7a97608";
+    private static final String GEOLOCATE_API_KEY = "a2efb35666c4f4327b66b2a93870e256";
     private static final String GEOLOCATE_API_URL = "https://api.openweathermap.org/geo/1.0/direct";
 
     private List<String> suggestions;

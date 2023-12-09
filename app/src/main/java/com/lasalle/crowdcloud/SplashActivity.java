@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import model.LocaleHelper;
 import model.User;
 
-public class SplashActivity extends AppCompatActivity {
+public class    SplashActivity extends AppCompatActivity {
 
     private TextView tvSlash;
     private String languagePrefer;

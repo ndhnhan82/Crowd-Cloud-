@@ -73,6 +73,8 @@ public class DatabaseManagement {
         void onHistoryListUpdated(ArrayList<History> userList);
 
         void onFailure(Exception e);
+
+        void onFavoriteListUpdated(ArrayList<Favorite> arrListUserFavorite);
     }
 
     public void showAlert(Context context, String message) {
@@ -90,5 +92,60 @@ public class DatabaseManagement {
         return FirebaseAuth.getInstance().getCurrentUser().getEmail()
                 .replace( "@","-" )
                 .replace( ".","-" );
+    }
+
+    public static void getUserFavoriteList(String safeEmail, final FavoriteListCallback callback) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference( "Users" )
+                .child( safeEmail ).child( "favorite" );
+        ArrayList <Favorite> arrListUserFavorite = new ArrayList<Favorite>();
+
+        userRef.addChildEventListener( new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Favorite favorite = snapshot.getValue( Favorite.class );
+                arrListUserFavorite.add( favorite );
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                // Handle changes if needed
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                // Handle removal if needed
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                // Handle move if needed
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error if needed
+                callback.onFailure( error.toException() );
+            }
+        } );
+
+        // After all child events are processed, notify the callback
+        userRef.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                callback.onFavoriteListUpdated( arrListUserFavorite );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error if needed
+                callback.onFailure( error.toException() );
+            }
+        } );
+    }
+    public interface FavoriteListCallback {
+        void onFavoriteListUpdated(ArrayList<Favorite> userList);
+
+
+        void onFailure(Exception e);
     }
 }

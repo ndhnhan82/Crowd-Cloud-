@@ -2,6 +2,7 @@ package fragments;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -52,13 +54,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import model.DatabaseManagement;
+import model.Favorite;
 import model.History;
 import model.LocaleHelper;
 import model.LocationAutoCompleteTask;
 
 public class Home extends Fragment {
 
-    private Button btnFinish;
+    private Button btnFinish, btnFavorite;
     private ScrollView svResults;
     private TextView tvCityResult, tvTemperatureResult, tvHumidityResult, tvDescriptionResult, tvWindSpeedResult, tvCloudinessResult, tvPressureResult;
     protected TextView tvTempDay2_1, tvTempDay3_1, tvTempDay4_1, tvTempDay5_1;
@@ -66,6 +69,7 @@ public class Home extends Fragment {
     protected CardView cardView1, cardView2, cardView3;
     private FrameLayout frameLayoutHome;
     private DatabaseReference historyRef;
+    private DatabaseReference favRef;
 
     private static final String ARG_PARAM = "FromUserHistoryList";
     private static final String api = "bd5e378503939ddaee76f12ad7a97608";
@@ -89,6 +93,7 @@ public class Home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+
 //        getFavorite( new FavoriteCallBack() {
 //            @Override
 //            public void onFavoriteUpdated(History history) {
@@ -102,8 +107,8 @@ public class Home extends Fragment {
 //            }
 //        } );
 
-
 //        location = favorite.getLocation();
+
         location = "MONTREAL";
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -128,6 +133,7 @@ public class Home extends Fragment {
 
             }
         } );
+
         favRef.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -267,12 +273,22 @@ public class Home extends Fragment {
         tvTempDay3_1 = view.findViewById( R.id.tvTempDay3_1 );
         tvTempDay4_1 = view.findViewById( R.id.tvTempDay4_1 );
         tvTempDay5_1 = view.findViewById( R.id.tvTempDay5_1 );
+        btnFavorite = view.findViewById(R.id.btnFavorite);
+
 
         String safeEmail = DatabaseManagement.getSafeEmailOfCurrentUser();
         historyRef = FirebaseDatabase.getInstance().getReference( "Users" )
                 .child( safeEmail ).child( "History" );
 //        edLocation1.setBackgroundColor( Color.WHITE );
         fetchWeatherData( location);
+
+
+        //Favorite Firebase Reference
+
+         favRef = FirebaseDatabase.getInstance().getReference("Users").child(safeEmail).child("favorite");
+
+
+
     }
     private void changeHomeLanguage(String languagePrefer) {
         resources = context.getResources();
@@ -351,6 +367,9 @@ public class Home extends Fragment {
                 fetchForecastData( location, latitude, longitude );
                 saveLocationToHistory( location.toUpperCase(), latitude, longitude );
 
+                showSaveConfirmationDialog(location,latitude,longitude);
+
+
             } else {
                 Toast.makeText( getContext(), "Geolocation data not found", Toast.LENGTH_SHORT ).show();
             }
@@ -363,6 +382,32 @@ public class Home extends Fragment {
     private void saveLocationToHistory(String location, double latitude, double longitude) {
         History history = new History( location, latitude, longitude );
         historyRef.child( location ).setValue( history );
+    }
+
+    private void saveFavorite(String location, double latitude, double longtitude) {
+        Favorite fav = new Favorite(location, latitude, longtitude);
+        favRef.child(location).setValue(fav);
+    }
+
+    private void showSaveConfirmationDialog(final String location, final double latitude, final double longitude) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        btnFavorite.setOnClickListener(v -> {
+            builder.setTitle("Save Location")
+                .setMessage("Do you want to save this location to favorites?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveFavorite(location.toUpperCase(),latitude,longitude);
+                        Toast.makeText(getContext(), "Location saved to favorites", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User clicked No, do nothing or add any specific action
+                    }
+                })
+                .show();});
+
     }
 
     private void fetchForecastData(String location, double latitude, double longitude) {

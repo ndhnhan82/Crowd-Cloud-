@@ -18,6 +18,7 @@ import com.lasalle.crowdcloud.adapter.HistoryAdapter;
 import java.util.ArrayList;
 
 import model.DatabaseManagement;
+import model.Favorite;
 import model.History;
 import model.User;
 
@@ -74,6 +75,11 @@ public class UserHistory extends Fragment {
             @Override
             public void onFailure(Exception e) {
                 Log.d( "ERROR", e.getMessage() );
+            }
+
+            @Override
+            public void onFavoriteListUpdated(ArrayList<Favorite> arrListUserFavorite) {
+
             }
         } );
 
